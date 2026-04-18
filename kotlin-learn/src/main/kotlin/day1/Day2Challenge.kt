@@ -22,13 +22,16 @@ fun applyDiscount(originalPrice: Double, discountPercentage: Double): Double {
 
 // TODO 3: Write a higher order function that processes multiple orders
 fun processOrders(items: List<String>, transformer: (Double) -> Double): Double {
-    var totalPrice = 0.0
-
-    items.forEach { item ->
-        val cost = calculateItemCost(item)
-        totalPrice += cost
+    return items.sumOf { item ->
+        transformer(calculateItemCost(item))
     }
-    return transformer(totalPrice)
+//    var totalPrice = 0.0
+//
+//    items.forEach { item ->
+//        val cost = calculateItemCost(item)
+//        totalPrice += cost
+//    }
+//    return transformer(totalPrice)
 }
 
 fun main() {
@@ -38,7 +41,7 @@ fun main() {
     println("Burger: $burgerPrice")
     println("Salad: $saladPrice\n")
 
-    // TODO 4: Calculate cost for 2 pizzas, apply 15% discount, print the result\
+    // TODO 4: Calculate cost for 2 pizzas, apply 15% discount, print the result
     val itemCost = calculateItemCost("Pizza", 2)
     println("Item Cost: KSh ${"%.2f".format(itemCost)}")
     val afterDiscount = applyDiscount(itemCost, 15.0)
@@ -47,8 +50,10 @@ fun main() {
     // TODO 5: Use processOrders with a lambda that applies 20% discount
     val menuItems = listOf<String>("pizza", "burger", "salad")
     val processedPrice = processOrders(menuItems) {total -> total * 0.8}
-    println("All items total: KSh ${"%.2f".format(menuItems.sumOf { calculateItemCost(it)})}")
-    println("With 20% discount: KSh ${"%.2f".format(processedPrice)}\n")
+    val rawTotal = menuItems.sumOf { calculateItemCost(it) }
+    val discountedTotal = processOrders(menuItems) { it * 0.8 }
+    println("Raw: KSh ${"%.2f".format(rawTotal)}")
+    println("With 20% discount: KSh ${"%.2f".format(discountedTotal)}")
 
     // TODO 6: Create a lamda that doubles the price (for markup)
     val doublePrice = processOrders(menuItems) { total -> total * 2}

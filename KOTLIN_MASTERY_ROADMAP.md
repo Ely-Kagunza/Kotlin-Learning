@@ -1,113 +1,174 @@
-# Kotlin Mastery & Mobile Development Roadmap
-## Kitchen Command Mobile App - 4 Month Intensive Learning Plan
+# Kotlin Mastery & Mobile Development Roadmap (v2)
+## Kitchen Command Mobile App - 5 Month Sustainable Learning Plan
 
-**Duration:** 16 weeks (112 days)  
-**Weekly Commitment:** 25-28 hours  
-**Goal:** Kotlin proficiency → Android app building → Hardware integration ready
+**Duration:** 20 weeks (140 days)
+**Weekly Commitment:** 12–15 hours (sustainable) / up to 18 hours on "push weeks"
+**Goal:** Kotlin proficiency → Modern Android (Jetpack Compose) → Hardware integration → Production-ready
+**Primary UI Framework:** Jetpack Compose (NOT XML layouts — XML is legacy-only)
+
+**Target Toolchain (April 2026):**
+- **Kotlin:** 2.3.20 (latest stable)
+- **Compose BOM:** `2026.03.00`
+- **compileSdk / targetSdk:** 36 (Android 16) — required by Google Play from Aug 31, 2026
+- **minSdk:** 26 (Android 8.0, covers ~97% of devices — bump from v1's 24)
+- **Gradle:** 9.3.x
+- **KSP** (Kotlin Symbol Processing) over **KAPT** — faster, required by Room 3.0
+
+---
+
+## IDE Setup — IMPORTANT for IntelliJ IDEA Ultimate Users
+
+If you're on IntelliJ IDEA Ultimate, read this carefully.
+
+**The Android plugin is no longer bundled with IntelliJ IDEA** (since 2023.3+). You can still install it via `Settings → Plugins → Marketplace → "Android"`, but Android Studio is Google's official tool and has first-class support for:
+- AVD Manager (emulator)
+- Layout Inspector
+- CPU/Memory Profiler
+- Compose Preview (works in IDEA but more reliable in Studio)
+- Android-specific lint + quick-fixes
+- Tight integration with the latest Android Gradle Plugin (AGP)
+
+IDEA Ultimate typically lags 6+ months behind Android Studio on these tools.
+
+**Recommended split:**
+
+| Weeks | IDE | Why |
+|---|---|---|
+| 1–8 (Kotlin only) | **IntelliJ IDEA Ultimate** | Best Kotlin experience + your Django backend in the same IDE |
+| 9–20 (Android) | **Android Studio** (free, install alongside Ultimate) | Official Android tooling, emulator, profiler, Compose Preview |
+
+Both IDEs share the same keyboard shortcuts, settings, and code style. Switching costs ~5 minutes. Install Android Studio from https://developer.android.com/studio when you hit Week 9.
+
+**Pure Kotlin project setup in IDEA Ultimate (Weeks 1–8):**
+`File → New → Project → Kotlin → Gradle (Kotlin DSL)` → select JDK 17+ → done.
+
+---
+
+## What Changed from v1 (and why)
+
+If you're the learner: you followed v1 up to Day 5 (Collections). **Good news — you keep everything through Day 7.** Nothing you've learned is wasted. What changes is everything *after* Day 7.
+
+| Problem in v1 | Fix in v2 |
+|---|---|
+| Phase 3+ was literally unfinished ("token limit" placeholder) | Every phase now has real teaching content or detailed outlines |
+| Taught XML + ViewBinding (deprecated-in-practice) | Teaches Jetpack Compose from day one of Android |
+| Coroutines never actually taught, only listed as a checkpoint | Dedicated Phase 4 (Weeks 7–8) with suspend, Flow, structured concurrency |
+| Missing scope functions, sealed classes, generics, delegation, visibility modifiers | All added in Phases 2–3 |
+| Testing started Week 15 (too late) | Introduced Week 5; woven through every subsequent phase |
+| MVP scheduled Week 9 (fantasy) | Moved to Week 14 (realistic) |
+| 25–28 hrs/week (burnout guaranteed) | 12–15 hrs/week (sustainable) |
+| C parallel track (~100 hrs wasted on unrelated skill) | Dropped to optional 1 hr/week; focus goes to Kotlin/Android |
+| Django "read your own code" Sundays (passive) | Active refactoring challenges with clear deliverables |
+| No Gradle, no Hilt, no Retrofit, no Room depth | All have dedicated lessons in Phase 6 |
 
 ---
 
 ## Table of Contents
 1. [Overall Strategy](#overall-strategy)
 2. [Week-by-Week Breakdown](#week-by-week-breakdown)
-3. [Kotlin Learning Roadmap (Detailed Daily Lessons)](#kotlin-learning-roadmap)
-4. [C Project Track (Parallel)](#c-project-track)
-5. [Django Sunday Walkthroughs](#django-sunday-walkthroughs)
-6. [Assessment Checkpoints](#assessment-checkpoints)
+3. Phase 1: Kotlin Fundamentals (Weeks 1–2) — *PRESERVED*
+4. Phase 2: Kotlin Intermediate (Weeks 3–4) — *NEW*
+5. Phase 3: OOP & Type System (Weeks 5–6) — *EXPANDED*
+6. Phase 4: Advanced Kotlin — Coroutines & Flow (Weeks 7–8) — *NEW*
+7. Phase 5: Android with Jetpack Compose (Weeks 9–10) — *REPLACED*
+8. Phase 6: Architecture & Data (Weeks 11–12) — *NEW*
+9. Phase 7: Real App Building (Weeks 13–16)
+10. Phase 8: Hardware & Production (Weeks 17–20) — *EXPANDED*
+11. [Optional C Sidebar](#optional-c-sidebar)
+12. [Active Django Sundays](#active-django-sundays)
+13. [Assessment Checkpoints](#assessment-checkpoints)
+14. [Study Tips & Resources](#study-tips--resources)
 
 ---
 
 ## Overall Strategy
 
-### Time Allocation (Weekly)
-- **Kotlin:** 18-20 hours (Mon, Wed, Fri focus days + Sat practice)
-- **C Projects:** 5-7 hours (Tue, Thu + Sat practice)
-- **Django:** 0.5-1 hour (Sunday passive review)
-- **Total:** 25-28 hours/week
+### Time Allocation (Weekly, sustainable)
+- **Kotlin/Android focused sessions:** 10–12 hours (Mon, Wed, Fri, Sat)
+- **Review + spaced repetition:** 1–2 hours (any day)
+- **Active Django refactoring (optional):** 1 hour (Sunday)
+- **C sidebar (optional):** 1 hour (Tuesday or Thursday)
+- **Total core:** 12–15 hours/week
 
-### Kotlin Learning Methodology
+### Learning Methodology
 - **Code-first approach:** Write code, then understand concepts
-- **Bridging:** Compare Kotlin to JavaScript, TypeScript, Python syntax
-- **Pedagogy:** Build mental models before advanced topics
-- **Android progression:** Syntax → Android Fundamentals → Real app building
+- **Bridging:** Compare Kotlin to JavaScript, TypeScript, Python syntax (where helpful)
+- **Active recall over passive reading:** Every day ends with a 10-min "explain it to yourself" session
+- **Spaced repetition:** Every Saturday = review Monday's notes
+- **Testing first-class from Week 5:** No feature without a test
 
-### C Project Methodology
-- **Protect investment:** 5 weeks of C learning already done
-- **Project-based:** Build real applications, not abstract exercises
-- **Skill sharpening:** 1-2 hour focused sessions
-- **Interview prep:** Rare skillset differentiator
+### Android Pedagogy (modern)
+- Start with **Jetpack Compose** (declarative UI). You will rarely touch XML.
+- Learn **state management before navigation**. State is the heart of Compose.
+- Architecture (MVVM + Hilt) comes **after** you've felt the pain of not having it.
+- **Real backend integration from Week 11**, not week 9.
 
-### Django Approach
-- **Passive learning:** Code review of existing implementation
-- **Context-based:** Learn patterns while reading your own code
-- **Maintenance mode:** No active feature learning required
+### What's Explicitly Out of Scope (for now)
+- Kotlin Multiplatform (KMP) — revisit after Week 20 if needed
+- Jetpack Compose animations beyond basics — touch in Week 19
+- Custom Gradle plugins / build logic — unnecessary for your goal
 
 ---
 
 ## Week-by-Week Breakdown
 
-| Week | Focus | Kotlin Hours | C Hours | Django | Main Deliverable |
-|------|-------|--------------|---------|--------|------------------|
-| 1-2 | Fundamentals | 8-10/week | 5-6/week | 30 min | Kotlin syntax mastery |
-| 3-4 | OOP Concepts | 8-10/week | 5-6/week | 30 min | Classes, interfaces, inheritance |
-| 5-6 | Android Basics | 8-10/week | 5-6/week | 1 hour | Activities, lifecycle, fragments |
-| 7-8 | Advanced Android | 8-10/week | 5-6/week | 1 hour | Navigation, services, async |
-| 9-10 | Real App Building | 10-12/week | 4-5/week | 1 hour | Kitchen Command MVP skeleton |
-| 11-12 | Backend Integration | 10-12/week | 4-5/week | 1 hour | API calls, database, state mgmt |
-| 13-14 | Hardware & Polish | 8-10/week | 5-6/week | 1 hour | Bluetooth, printers, optimization |
-| 15-16 | Production Ready | 8-10/week | 5-6/week | 1 hour | Testing, deployment, release |
+| Week | Phase | Focus | Hrs | Main Deliverable |
+|------|-------|-------|-----|------------------|
+| 1–2 | 1 | Kotlin Fundamentals | 12/wk | Restaurant Menu System (Day 7) |
+| 3–4 | 2 | Kotlin Intermediate | 13/wk | Refactored system using scope functions + sealed states |
+| 5–6 | 3 | OOP & Type System | 14/wk | Typed domain model with tests |
+| 7–8 | 4 | Coroutines & Flow | 15/wk | Async order processor with Flow emissions |
+| 9–10 | 5 | Jetpack Compose | 15/wk | 3-screen Compose app with state hoisting |
+| 11–12 | 6 | Architecture & Data | 15/wk | Menu screen fetching real API, Room-cached |
+| 13 | 7 | Auth & Login | 14/wk | Login + token refresh flow |
+| 14 | 7 | MVP Skeleton | 16/wk | **Kitchen Command MVP v0.1** |
+| 15 | 7 | WebSockets & Realtime | 15/wk | Live order feed |
+| 16 | 7 | Offline & Error Handling | 15/wk | Robust MVP v0.2 |
+| 17 | 8 | Bluetooth + Printers | 14/wk | Receipt printing works |
+| 18 | 8 | Testing Deep Dive | 12/wk | 70%+ coverage on critical paths |
+| 19 | 8 | Performance & Polish | 12/wk | Profiled, no leaks, smooth |
+| 20 | 8 | Production Release | 14/wk | Play Store submission |
 
 ---
 
-# Kotlin Learning Roadmap
-
-## Phase 1: Kotlin Fundamentals (Weeks 1-2)
+# Phase 1: Kotlin Fundamentals (Weeks 1–2)
 *Goal: Comfortable with Kotlin syntax, feel like you own the language*
 
-### Day 1-2: Variables, Types, and Null Safety
+*Status: UNCHANGED from v1 — you've learned through Day 5 and it's good material.*
+
+### Day 1–2: Variables, Types, and Null Safety
 
 #### Concept 1: Variables and Basic Types
 
 **Code First (Kotlin):**
 ```kotlin
-// Immutable variable
 val name = "Kitchen Command"
 val age: Int = 25
 
-// Mutable variable
 var count = 0
 count = 5
 
-// Type inference
-val price = 19.99  // Double inferred
-val isAvailable = true  // Boolean inferred
+val price = 19.99
+val isAvailable = true
 
-// Explicit types
 val revenue: Double = 5000.50
 val orderId: String = "ORD-001"
 ```
 
-**Bridge to JavaScript/TypeScript:**
+**Bridge to TypeScript:**
 ```typescript
-// TypeScript (similar to Kotlin)
 const name = "Kitchen Command"  // val in Kotlin
-let count = 0  // var in Kotlin
+let count = 0                    // var in Kotlin
 count = 5
-
-// But Kotlin adds mandatory type safety
-const name: string = "Kitchen Command"
+const name2: string = "Kitchen Command"
 ```
 
 **Bridge to Python:**
 ```python
-# Python (no type enforcement at runtime)
 name = "Kitchen Command"
 count = 0
 count = 5
-
-# Python 3.10 typing (similar mental model to Kotlin)
-name: str = "Kitchen Command"
-count: int = 0
+name2: str = "Kitchen Command"
 ```
 
 **Key Difference:** Kotlin enforces types at compile time. Python/JavaScript don't.
@@ -116,61 +177,25 @@ count: int = 0
 
 #### Concept 2: Null Safety (THE Kotlin Superpower)
 
-**Code First (Kotlin):**
 ```kotlin
-// Non-null type (cannot be null)
 val name: String = "John"
-// name = null  // COMPILE ERROR - stops you before runtime
+// name = null  // COMPILE ERROR
 
-// Nullable type (explicitly can be null)
 val phoneNumber: String? = null
 val email: String? = "john@kitchen.com"
 
-// Check before using
 if (phoneNumber != null) {
     println(phoneNumber.length)
 }
 
-// Smart cast (Kotlin knows it's not null after check)
 val phone: String? = "5551234567"
 if (phone != null) {
-    println(phone.length)  // No need for ?. here, Kotlin is smart
+    println(phone.length)  // smart cast — no ?. needed
 }
 
-// Safe call operator (?.)
-val length = phoneNumber?.length  // Returns null if phoneNumber is null
-
-// Elvis operator (?:) - return default if null
-val displayPhone = phoneNumber ?: "No phone"
-```
-
-**Bridge to JavaScript/TypeScript:**
-```typescript
-// TypeScript optional (similar)
-let phone: string | null = null
-let email: string | undefined = undefined
-
-// Optional chaining (similar to ?.)
-const length = phone?.length
-
-// Nullish coalescing (similar to ?:)
-const display = phone ?? "No phone"
-```
-
-**Bridge to Python:**
-```python
-# Python - no compile-time null checking
-phone = None
-email = "john@kitchen.com"
-
-# Must check manually
-if phone is not None:
-    print(len(phone))
-else:
-    print("No phone")
-
-# Python 3.10 | syntax (not automatic, must write)
-phone: str | None = None
+val length = phoneNumber?.length                  // safe call
+val displayPhone = phoneNumber ?: "No phone"      // Elvis
+val forced = phoneNumber!!.length                 // NPE if null — avoid
 ```
 
 **Why This Matters:** Kotlin eliminates null pointer exceptions at compile time. This is HUGE for production apps.
@@ -179,18 +204,13 @@ phone: str | None = None
 
 #### Concept 3: String Templates
 
-**Code First (Kotlin):**
 ```kotlin
 val name = "John"
 val age = 30
 
-// String template with $
 val message = "Hello, $name"
-
-// Expression in template
 val greeting = "Next year, $name will be ${age + 1} years old"
 
-// Raw strings
 val json = """
     {
         "name": "$name",
@@ -199,48 +219,23 @@ val json = """
 """.trimIndent()
 ```
 
-**Bridge to JavaScript:**
-```javascript
-// Template literals (very similar)
-const name = "John"
-const age = 30
-
-const message = `Hello, ${name}`
-const greeting = `Next year, ${name} will be ${age + 1} years old`
-```
-
-**Bridge to Python:**
-```python
-# Python f-strings
-name = "John"
-age = 30
-
-message = f"Hello, {name}"
-greeting = f"Next year, {name} will be {age + 1} years old"
-```
-
 ---
 
-### Day 3-4: Functions and Lambdas
+### Day 3–4: Functions and Lambdas
 
 #### Concept 1: Functions
 
-**Code First (Kotlin):**
 ```kotlin
-// Simple function
 fun greet(name: String): String {
     return "Hello, $name"
 }
 
-// Single expression function (arrow function)
-fun add(a: Int, b: Int) = a + b
+fun add(a: Int, b: Int) = a + b                  // single-expression
 
-// No return type (Unit = void)
-fun printMessage(message: String) {
+fun printMessage(message: String) {              // Unit = void
     println(message)
 }
 
-// Default parameters
 fun createOrder(
     orderId: String,
     quantity: Int = 1,
@@ -249,1433 +244,1293 @@ fun createOrder(
     println("Order $orderId: $quantity items, status: $status")
 }
 
-// Named parameters
-createOrder(orderId = "ORD-001", quantity = 5)
+createOrder(orderId = "ORD-001", quantity = 5)   // named args
 createOrder("ORD-002", status = "completed")
 ```
 
-**Bridge to JavaScript:**
-```javascript
-// JavaScript function
-function greet(name) {
-    return `Hello, ${name}`
-}
-
-// Arrow function (similar to Kotlin =)
-const add = (a, b) => a + b
-
-// Default parameters
-function createOrder(orderId, quantity = 1, status = "pending") {
-    console.log(`Order ${orderId}: ${quantity} items, status: ${status}`)
-}
-
-// Named parameters (object destructuring)
-createOrder({ orderId: "ORD-001", quantity: 5 })
-```
-
-**Bridge to Python:**
-```python
-def greet(name):
-    return f"Hello, {name}"
-
-def add(a, b):
-    return a + b
-
-# Default parameters
-def create_order(order_id, quantity=1, status="pending"):
-    print(f"Order {order_id}: {quantity} items, status: {status}")
-```
-
 ---
 
-#### Concept 2: Lambda Functions (Anonymous Functions)
+#### Concept 2: Lambda Functions
 
-**Code First (Kotlin):**
 ```kotlin
-// Lambda syntax: { parameters -> body }
 val double = { x: Int -> x * 2 }
+println(double(5))                                // 10
 
-// Call lambda
-println(double(5))  // Output: 10
-
-// Lambda with no parameters
 val getMessage = { "Hello from Kitchen Command" }
-println(getMessage())
-
-// Lambda with multiple parameters
 val addNumbers = { a: Int, b: Int -> a + b }
-println(addNumbers(10, 20))  // Output: 30
 
-// Lambdas as function parameters
 fun processOrder(orders: List<String>, filter: (String) -> Boolean) {
     orders.forEach { order ->
-        if (filter(order)) {
-            println("Processing: $order")
-        }
+        if (filter(order)) println("Processing: $order")
     }
 }
 
-// Use lambda with function
 val orders = listOf("ORD-001", "ORD-002", "ORD-003")
-processOrder(orders) { order -> order.contains("002") }
+processOrder(orders) { it.contains("002") }       // trailing lambda + `it`
 
-// map - transform each item
 val prices = listOf(10, 20, 30)
-val doubled = prices.map { price -> price * 2 }
-println(doubled)  // [20, 40, 60]
-
-// filter - keep matching items
-val filtered = prices.filter { price -> price > 15 }
-println(filtered)  // [20, 30]
-```
-
-**Bridge to JavaScript:**
-```javascript
-// Arrow function (similar to Kotlin lambda)
-const double = (x) => x * 2
-console.log(double(5))  // 10
-
-// No parameters
-const getMessage = () => "Hello"
-
-// With array methods
-const prices = [10, 20, 30]
-const doubled = prices.map((price) => price * 2)
-const filtered = prices.filter((price) => price > 15)
-```
-
-**Bridge to Python:**
-```python
-# Lambda syntax (similar concept)
-double = lambda x: x * 2
-print(double(5))  # 10
-
-# Using map/filter
-prices = [10, 20, 30]
-doubled = list(map(lambda price: price * 2, prices))
-filtered = list(filter(lambda price: price > 15, prices))
-
-# Or more Pythonic with comprehensions
-doubled = [price * 2 for price in prices]
-filtered = [price for price in prices if price > 15]
+val doubled = prices.map { it * 2 }               // [20, 40, 60]
+val filtered = prices.filter { it > 15 }          // [20, 30]
 ```
 
 ---
 
-### Day 5-6: Collections (List, Map, Set)
+### Day 5–6: Collections (List, Map, Set) — *YOU ARE HERE*
 
-#### Concept: Collections and Higher-Order Functions
-
-**Code First (Kotlin):**
 ```kotlin
-// Lists (ordered, can have duplicates)
 val numbers = listOf(1, 2, 3, 4, 5)
 val mutableNumbers = mutableListOf(1, 2, 3)
 mutableNumbers.add(4)
 
-// Access elements
-println(numbers[0])  // 1
-println(numbers.first())  // 1
-println(numbers.last())  // 5
+println(numbers[0]); println(numbers.first()); println(numbers.last())
 
-// Iterate
 numbers.forEach { num -> println(num) }
+val doubled = numbers.map { it * 2 }
+val evenNumbers = numbers.filter { it % 2 == 0 }
+val firstEven = numbers.find { it % 2 == 0 }
+val hasEven = numbers.any { it % 2 == 0 }
+val allPositive = numbers.all { it > 0 }
 
-// Transform with map
-val doubled = numbers.map { it * 2 }  // [2, 4, 6, 8, 10]
-
-// Filter
-val evenNumbers = numbers.filter { it % 2 == 0 }  // [2, 4]
-
-// Find first matching
-val firstEven = numbers.find { it % 2 == 0 }  // 2
-
-// Check if any/all match
-val hasEven = numbers.any { it % 2 == 0 }  // true
-val allPositive = numbers.all { it > 0 }  // true
-
-// Maps (key-value pairs)
 val menu = mapOf(
     "pizza" to 12.99,
     "burger" to 8.99,
     "salad" to 6.99
 )
-
-// Access
-println(menu["pizza"])  // 12.99
-
-// Iterate
+println(menu["pizza"])
 menu.forEach { (item, price) -> println("$item: $price") }
-
-// Transform map
-val prices = menu.map { (_, price) -> price }  // [12.99, 8.99, 6.99]
-
-// Filter map
 val cheapItems = menu.filter { (_, price) -> price < 10 }
 
-// Sets (unique items, no order)
 val uniqueOrders = setOf("ORD-001", "ORD-002", "ORD-001")
 println(uniqueOrders)  // {ORD-001, ORD-002}
 ```
 
-**Bridge to JavaScript:**
-```javascript
-// Arrays (similar to Kotlin List)
-const numbers = [1, 2, 3, 4, 5]
-console.log(numbers[0])  // 1
-
-// map, filter, find
-const doubled = numbers.map((num) => num * 2)
-const evens = numbers.filter((num) => num % 2 === 0)
-const firstEven = numbers.find((num) => num % 2 === 0)
-
-// Objects (similar to Kotlin Map)
-const menu = {
-    pizza: 12.99,
-    burger: 8.99,
-    salad: 6.99
-}
-
-// Iterate
-Object.entries(menu).forEach(([item, price]) => {
-    console.log(`${item}: ${price}`)
-})
-```
-
-**Bridge to Python:**
-```python
-# Lists
-numbers = [1, 2, 3, 4, 5]
-
-# map, filter, find (as comprehensions)
-doubled = [num * 2 for num in numbers]
-evens = [num for num in numbers if num % 2 == 0]
-first_even = next((num for num in numbers if num % 2 == 0), None)
-
-# Dictionaries (similar to Kotlin Map)
-menu = {
-    "pizza": 12.99,
-    "burger": 8.99,
-    "salad": 6.99
-}
-
-# Iterate
-for item, price in menu.items():
-    print(f"{item}: {price}")
-```
-
 ---
 
-### Day 7: Practice Day 1 - Build Your First Kotlin Program
-
-**Project: Restaurant Menu System**
+### Day 7: Practice Day 1 — Restaurant Menu System
 
 ```kotlin
 fun main() {
-    // Define menu items
     val menu = mapOf(
-        "pizza" to 12.99,
-        "burger" to 8.99,
-        "salad" to 6.99,
-        "pasta" to 10.99
+        "pizza" to 12.99, "burger" to 8.99,
+        "salad" to 6.99, "pasta" to 10.99
     )
-    
-    // Customers and their orders
     val customers = listOf(
         "Alice" to listOf("pizza", "salad"),
         "Bob" to listOf("burger", "burger"),
         "Charlie" to listOf("pasta", "pizza")
     )
-    
-    // Calculate total per customer
-    customers.forEach { (customerName, items) ->
-        val total = items.map { item ->
-            menu[item] ?: 0.0  // Use 0.0 if item not found
-        }.sum()
-        
-        println("$customerName ordered ${items.size} items: $${"%.2f".format(total)}")
+
+    customers.forEach { (name, items) ->
+        val total = items.map { menu[it] ?: 0.0 }.sum()
+        println("$name ordered ${items.size} items: $${"%.2f".format(total)}")
     }
-    
-    // Find most expensive item
+
     val mostExpensive = menu.maxByOrNull { it.value }
     println("Most expensive: ${mostExpensive?.key} = $${mostExpensive?.value}")
-    
-    // Calculate average price
+
     val avgPrice = menu.values.average()
     println("Average price: $${"%.2f".format(avgPrice)}")
-    
-    // Apply discount (10%)
+
     val discountedMenu = menu.mapValues { (_, price) -> price * 0.9 }
     println("Discounted menu: $discountedMenu")
 }
 ```
 
-**Output:**
-```
-Alice ordered 2 items: $19.98
-Bob ordered 2 items: $17.98
-Charlie ordered 2 items: $23.98
-Most expensive: pizza = $12.99
-Average price: $9.74
-Discounted menu: {pizza=11.691..., burger=8.091..., salad=6.291..., pasta=9.891...}
-```
-
-**What You Learned:**
-- Variables and types
-- Collections (Map, List)
-- Functions and lambdas
-- String templates
-- Null safety with Elvis operator (?:)
-- Standard library functions (map, sum, maxByOrNull, average)
+**What You Learned:** variables, types, collections, lambdas, string templates, Elvis operator, stdlib functions (`map`, `sum`, `maxByOrNull`, `average`).
 
 ---
 
-## Phase 2: Kotlin OOP Concepts (Weeks 3-4)
+# Phase 2: Kotlin Intermediate (Weeks 3–4) — *NEW*
+*Goal: Write idiomatic Kotlin. Bridge the gap between "syntax-works" and "code-looks-like-a-senior-wrote-it."*
 
-### Day 8-9: Classes and Objects
+### Day 8: Control Flow Deep Dive — `when`, Ranges, Loops
 
-#### Concept 1: Basic Classes
+#### `when` — the upgraded switch
 
-**Code First (Kotlin):**
 ```kotlin
-// Simple class
-class Restaurant {
-    var name = "Kitchen Command"
-    var rating = 4.5
+fun describeOrder(total: Double): String = when {
+    total <= 0.0 -> "Invalid"
+    total < 10.0 -> "Small"
+    total < 50.0 -> "Medium"
+    total < 200.0 -> "Large"
+    else -> "Enterprise"
 }
 
-// Instantiate and use
-val restaurant = Restaurant()
-println("${restaurant.name}: ${restaurant.rating} stars")
+fun statusLabel(status: String) = when (status) {
+    "pending" -> "Waiting"
+    "paid", "confirmed" -> "Ready to cook"     // multiple values
+    in listOf("cancelled", "refunded") -> "Dead"
+    else -> "Unknown"
+}
 
-// Class with constructor
-class Order(val id: String, val items: List<String>, var total: Double) {
-    fun printOrder() {
-        println("Order $id: ${items.size} items = $${"%.2f".format(total)}")
+val x: Any = 42
+val desc = when (x) {
+    is Int -> "Number: $x"                      // smart-cast inside branch
+    is String -> "Text of length ${x.length}"
+    else -> "Something else"
+}
+```
+
+`when` is an **expression** — it returns a value. Use it instead of chained `if/else if`.
+
+#### Ranges and progressions
+
+```kotlin
+for (i in 1..10) print("$i ")            // 1 2 3 4 5 6 7 8 9 10
+for (i in 1 until 10) print("$i ")       // 1..9 (exclusive)
+for (i in 10 downTo 1) print("$i ")      // 10..1
+for (i in 1..10 step 2) print("$i ")     // 1 3 5 7 9
+
+val age = 25
+if (age in 18..65) println("Working age")
+```
+
+#### Loops
+
+```kotlin
+val orders = listOf("A", "B", "C")
+for (o in orders) println(o)
+for ((index, o) in orders.withIndex()) println("$index: $o")
+
+var i = 0
+while (i < 3) { println(i); i++ }
+
+orders.forEachIndexed { index, o -> println("$index: $o") }
+```
+
+---
+
+### Day 9: Exception Handling
+
+```kotlin
+fun parsePrice(input: String): Double {
+    return try {
+        input.toDouble()
+    } catch (e: NumberFormatException) {
+        0.0
     }
 }
 
-// Create order
-val order = Order("ORD-001", listOf("pizza", "salad"), 19.98)
-order.printOrder()
+fun parsePriceOrNull(input: String): Double? = input.toDoubleOrNull()
 
-// Primary constructor shorthand (Kotlin magic!)
-class MenuItem(
-    val name: String,
-    val price: Double,
-    val available: Boolean = true
+// Result / runCatching — idiomatic Kotlin error handling
+val result: Result<Double> = runCatching { "12.99".toDouble() }
+result
+    .onSuccess { println("Parsed $it") }
+    .onFailure { println("Failed: ${it.message}") }
+
+val price = result.getOrDefault(0.0)
+val priceOrThrow = result.getOrThrow()
+
+// Custom exceptions
+class InvalidOrderException(msg: String) : Exception(msg)
+
+fun validateTotal(total: Double) {
+    require(total > 0) { "Total must be positive, got $total" }
+    check(total < 1_000_000) { "Total suspiciously large: $total" }
+}
+```
+
+**Rules:**
+- Use `toXOrNull()` instead of `try/catch` around `toX()` when possible.
+- Use `runCatching { }` + `.onSuccess / .onFailure` for functional-style error handling.
+- Use `require` for **argument validation**, `check` for **state validation**.
+- Create typed exceptions — never throw generic `Exception` in your own code.
+
+---
+
+### Day 10–11: Scope Functions (`let`, `run`, `apply`, `also`, `with`)
+
+These are the 5 functions that separate tourist-Kotlin from native-Kotlin. Master them.
+
+| Function | Receiver | Returns | Typical Use |
+|---|---|---|---|
+| `let` | `it` | lambda result | null-check + transform |
+| `run` | `this` | lambda result | compute with object context |
+| `apply` | `this` | the object | configure/build an object |
+| `also` | `it` | the object | side effects (logging) |
+| `with` | `this` | lambda result | group calls on one object |
+
+```kotlin
+val name: String? = "Kitchen"
+
+name?.let { println("Name is $it, length ${it.length}") }
+
+val result = "5".run { toInt() * 2 }          // 10
+
+val user = User().apply {
+    name = "Alice"
+    age = 30
+    email = "alice@kitchen.com"
+}                                              // returns the configured User
+
+val list = mutableListOf(1, 2, 3).also {
+    println("Before add: $it")
+}.apply {
+    add(4)
+}
+
+with(user) {
+    println(name)
+    println(age)
+}
+```
+
+**Decision tree:**
+- Need null safety? → `?.let { }`
+- Building/configuring an object? → `apply { }`
+- Side effect (log/debug) on a chain? → `also { }`
+- Need a transformed result? → `let { }` or `run { }`
+- Grouping calls on an existing object? → `with(obj) { }`
+
+---
+
+### Day 12: Classes, Constructors, Visibility
+
+```kotlin
+class Restaurant(
+    val name: String,                          // public by default
+    private var internalRating: Double,        // private
+    internal val regionCode: String            // module-private
 ) {
-    override fun toString() = "$name: $$price (Available: $available)"
-}
+    var publicFlag: Boolean = false
+        private set                             // read-public, write-private
 
-val pizza = MenuItem("Pizza", 12.99)
-println(pizza)  // Pizza: $12.99 (Available: true)
-```
+    protected open val slug: String = name.lowercase()
 
-**Bridge to JavaScript/TypeScript:**
-```typescript
-// TypeScript class
-class Restaurant {
-    name: string = "Kitchen Command"
-    rating: number = 4.5
-}
-
-const restaurant = new Restaurant()
-
-// TypeScript with constructor
-class Order {
-    constructor(
-        public id: string,
-        public items: string[],
-        public total: number
-    ) {}
-    
-    printOrder() {
-        console.log(`Order ${this.id}: ${this.items.length} items = $${this.total}`)
+    init {
+        require(name.isNotBlank()) { "Name required" }
     }
+
+    constructor(name: String) : this(name, 0.0, "US")   // secondary ctor
 }
 ```
 
-**Bridge to Python:**
-```python
-class Restaurant:
-    def __init__(self):
-        self.name = "Kitchen Command"
-        self.rating = 4.5
-
-class Order:
-    def __init__(self, id: str, items: list, total: float):
-        self.id = id
-        self.items = items
-        self.total = total
-    
-    def print_order(self):
-        print(f"Order {self.id}: {len(self.items)} items = ${self.total:.2f}")
-```
-
-**Key Difference:** Kotlin's primary constructor is built into the class declaration. Much cleaner!
+**Visibility modifiers:**
+- `public` (default) — everywhere
+- `private` — same file or same class
+- `internal` — same Gradle module
+- `protected` — class + subclasses (no file-level)
 
 ---
 
-#### Concept 2: Inheritance
+### Day 13: Practice — Refactor Day 7 with Intermediate Kotlin
 
-**Code First (Kotlin):**
-```kotlin
-// Base class
-open class Food(val name: String, val price: Double) {
-    open fun description(): String {
-        return "$name - $$price"
-    }
-}
+Take your Day 7 Restaurant Menu System and refactor it:
+1. Replace the `if/else` in discount logic with a `when` expression.
+2. Use `apply` to build the menu map.
+3. Use `?.let` to guard nullable lookups.
+4. Wrap the entire main in `runCatching` and print typed errors.
+5. Introduce at least one `private` helper function.
 
-// Inherit from Food
-class Burger(name: String, price: Double, val hasTopping: Boolean) : Food(name, price) {
-    override fun description(): String {
-        return "${super.description()} (Topping: $hasTopping)"
-    }
-}
-
-class Pizza(name: String, price: Double, val size: String) : Food(name, price) {
-    override fun description(): String {
-        return "${super.description()} - Size: $size"
-    }
-}
-
-// Use polymorphism
-val foods: List<Food> = listOf(
-    Burger("Classic Burger", 8.99, true),
-    Pizza("Pepperoni", 12.99, "Large")
-)
-
-foods.forEach { food ->
-    println(food.description())
-}
-
-// Output:
-// Classic Burger - $8.99 (Topping: true)
-// Pepperoni - $12.99 - Size: Large
-```
-
-**Important:** In Kotlin, classes are `final` by default. You MUST use `open` to allow inheritance. This is safer!
-
-**Bridge to Python:**
-```python
-class Food:
-    def __init__(self, name: str, price: float):
-        self.name = name
-        self.price = price
-    
-    def description(self):
-        return f"{self.name} - ${self.price}"
-
-class Burger(Food):
-    def __init__(self, name: str, price: float, has_topping: bool):
-        super().__init__(name, price)
-        self.has_topping = has_topping
-    
-    def description(self):
-        return f"{super().description()} (Topping: {self.has_topping})"
-```
+**Deliverable:** same output, fewer lines, cleaner intent.
 
 ---
 
-#### Concept 3: Interfaces
+### Day 14: Checkpoint Week 4
 
-**Code First (Kotlin):**
+**Self-test:**
+- [ ] Can you explain the difference between `let` and `also` without looking?
+- [ ] Can you write a `when` that smart-casts on `Any`?
+- [ ] Can you use `runCatching` to replace a try/catch?
+- [ ] Do you know when to use `require` vs `check`?
+
+---
+
+# Phase 3: OOP & Type System (Weeks 5–6) — *EXPANDED*
+*Goal: Model a domain correctly. Prefer types over comments.*
+
+### Day 15: Inheritance & Abstract Classes
+
 ```kotlin
-// Interface (contract)
+abstract class Food(val name: String, val price: Double) {
+    abstract fun description(): String          // must be overridden
+    open fun category(): String = "Generic"     // can be overridden
+    fun priceLabel() = "$${"%.2f".format(price)}"  // final
+}
+
+class Burger(name: String, price: Double, val hasTopping: Boolean)
+    : Food(name, price) {
+    override fun description() = "$name (topping: $hasTopping)"
+    override fun category() = "Fast Food"
+}
+```
+
+**Rules:**
+- Kotlin classes are `final` by default. Use `open` to allow inheritance.
+- Same for methods/properties.
+- `abstract` = no implementation, subclass **must** provide one.
+- Prefer composition over inheritance unless you have a real "is-a" relationship.
+
+---
+
+### Day 16: Interfaces + Interface Delegation
+
+```kotlin
 interface Orderable {
     fun addToCart()
     fun calculatePrice(): Double
 }
 
-// Class implements interface
-class MenuItem(val name: String, val price: Double) : Orderable {
-    override fun addToCart() {
-        println("Added $name to cart")
-    }
-    
-    override fun calculatePrice(): Double {
-        return price
-    }
-}
-
-// Interface with default implementation
 interface Printable {
-    fun print() {
-        println("Printing document...")
-    }
+    fun print() = println("Printing...")         // default impl
 }
 
-class Order : Printable {
-    // Can override or use default
-    override fun print() {
-        println("Order details:")
-        Printable.super.print()
-    }
+class MenuItem(val name: String, val price: Double) : Orderable, Printable {
+    override fun addToCart() = println("Added $name")
+    override fun calculatePrice() = price
 }
 
-// Multiple interface implementation
-interface Trackable {
-    fun getStatus(): String
-}
-
-class Delivery : Orderable, Trackable, Printable {
-    override fun addToCart() {
-        println("Delivery added")
-    }
-    
-    override fun calculatePrice(): Double = 2.99
-    
-    override fun getStatus(): String = "In Transit"
-}
-```
-
-**Bridge to TypeScript:**
-```typescript
-interface Orderable {
-    addToCart(): void
-    calculatePrice(): number
-}
-
-class MenuItem implements Orderable {
-    constructor(public name: string, public price: number) {}
-    
-    addToCart() {
-        console.log(`Added ${this.name} to cart`)
-    }
-    
-    calculatePrice() {
-        return this.price
+// Interface delegation — Kotlin superpower
+class LoggedList<T>(private val list: MutableList<T>) : MutableList<T> by list {
+    override fun add(element: T): Boolean {
+        println("Adding: $element")
+        return list.add(element)
     }
 }
 ```
+
+`by list` means "delegate all `MutableList` methods to `list`." You only override what you want to customize. No more writing 20 boilerplate forwarding methods.
 
 ---
 
-### Day 10-11: Data Classes and Extension Functions
-
-#### Concept 1: Data Classes
-
-**Code First (Kotlin):**
-```kotlin
-// Traditional class with boilerplate
-data class User(
-    val id: Int,
-    val name: String,
-    val email: String
-)
-
-// Data classes automatically get:
-// - equals()
-// - hashCode()
-// - toString()
-// - copy()
-// - componentN() (for destructuring)
-
-val user1 = User(1, "Alice", "alice@kitchen.com")
-val user2 = User(1, "Alice", "alice@kitchen.com")
-
-println(user1 == user2)  // true (equals works!)
-println(user1)  // User(id=1, name=Alice, email=alice@kitchen.com)
-
-// copy() - create modified copy
-val user3 = user1.copy(id = 2)
-println(user3)  // User(id=2, name=Alice, email=alice@kitchen.com)
-
-// Destructuring
-val (id, name, email) = user1
-println("$id: $name ($email)")
-
-// In loops
-data class Order(val id: String, val total: Double, val status: String)
-
-val orders = listOf(
-    Order("ORD-001", 19.98, "completed"),
-    Order("ORD-002", 15.99, "pending")
-)
-
-orders.forEach { (id, total, status) ->
-    println("$id: $$total ($status)")
-}
-```
-
-**Bridge to Python:**
-```python
-from dataclasses import dataclass
-
-@dataclass
-class User:
-    id: int
-    name: str
-    email: str
-    
-    # dataclass automatically generates __eq__, __repr__, etc.
-
-user1 = User(1, "Alice", "alice@kitchen.com")
-user2 = User(1, "Alice", "alice@kitchen.com")
-
-print(user1 == user2)  # True
-print(user1)  # User(id=1, name='Alice', email='alice@kitchen.com')
-
-# Destructuring
-id, name, email = user1
-```
-
----
-
-#### Concept 2: Extension Functions
-
-**Code First (Kotlin):**
-```kotlin
-// Add function to existing class WITHOUT inheritance
-fun String.isValidEmail(): Boolean {
-    return this.contains("@")
-}
-
-val email = "john@kitchen.com"
-println(email.isValidEmail())  // true
-
-// Extension on List
-fun <T> List<T>.second(): T? {
-    return if (this.size >= 2) this[1] else null
-}
-
-val numbers = listOf(1, 2, 3)
-println(numbers.second())  // 2
-
-// Extension on Int
-fun Int.isEven(): Boolean {
-    return this % 2 == 0
-}
-
-println(4.isEven())  // true
-println(5.isEven())  // false
-
-// Real-world: Kitchen app extensions
-data class Order(val id: String, val items: List<String>, val total: Double)
-
-fun Order.printReceipt() {
-    println("========== RECEIPT ==========")
-    println("Order: ${this.id}")
-    println("Items: ${items.size}")
-    println("Total: $${"%.2f".format(total)}")
-    println("==============================")
-}
-
-val order = Order("ORD-001", listOf("pizza", "salad"), 19.98)
-order.printReceipt()
-
-// Extension for formatting
-fun Double.formatCurrency(): String {
-    return "$${"%.2f".format(this)}"
-}
-
-println(19.98.formatCurrency())  // $19.98
-```
-
-**Why Extensions Matter:** You can add functionality to classes without modifying their code. Perfect for Kitchen Command plugins!
-
----
-
-### Day 12: Practice Day 2 - OOP Restaurant System
-
-**Project: Restaurant Management System**
+### Day 17: Data Classes, Enums, Sealed Classes
 
 ```kotlin
-// Base class
-open class MenuItem(
+data class User(val id: Int, val name: String, val email: String)
+// auto-generates equals, hashCode, toString, copy, componentN
+
+val u1 = User(1, "Alice", "a@k.com")
+val u2 = u1.copy(name = "Alicia")
+val (id, name, email) = u1                     // destructuring
+
+enum class OrderStatus(val label: String) {
+    PENDING("Waiting"),
+    PAID("Paid"),
+    SHIPPED("On the way"),
+    CANCELLED("Cancelled"),
+    REJECTED("Rejected");
+
+    fun isTerminal(): Boolean = this == CANCELLED || this == SHIPPED
+}
+
+// SEALED — the killer feature for state modeling
+sealed class ApiResponse {
+    data class Success(val id: String, val total: Double) : ApiResponse()
+    sealed class Error : ApiResponse() {
+        object InvalidTotal : Error()
+        object OrderRejected : Error()
+        data class Network(val code: Int) : Error()
+        data class Unknown(val message: String) : Error()
+    }
+}
+
+fun handle(resp: ApiResponse) = when (resp) {      // exhaustive!
+    is ApiResponse.Success -> "OK: ${resp.id}"
+    is ApiResponse.Error.InvalidTotal -> "Bad total"
+    is ApiResponse.Error.OrderRejected -> "Rejected"
+    is ApiResponse.Error.Network -> "Net ${resp.code}"
+    is ApiResponse.Error.Unknown -> "? ${resp.message}"
+}
+```
+
+**Why sealed classes beat strings:**
+- Compiler forces you to handle every case (exhaustiveness).
+- Refactor-safe: add a new subclass → compiler tells you every `when` that needs updating.
+- Replaces "stringly-typed" APIs with type-safe ones.
+
+---
+
+### Day 18: Companion Objects, `object`, Factory Methods
+
+```kotlin
+class Order private constructor(
     val id: String,
+    var total: Double,
+    var status: OrderStatus = OrderStatus.PENDING
+) {
+    fun addCharge(amount: Double) {
+        require(amount > 0) { "Amount must be positive" }
+        total += amount
+    }
+
+    fun applyDiscount(pct: Double) {
+        require(pct in 0.0..100.0) { "Discount 0-100, got $pct" }
+        total *= (1 - pct / 100)
+    }
+
+    companion object {
+        private var ordersCreated = 0
+        var dailyRevenue: Double = 0.0
+            private set
+
+        fun create(initialTotal: Double): Order {
+            require(initialTotal > 0) { "Total must be positive" }
+            ordersCreated++
+            dailyRevenue += initialTotal
+            return Order("order-$ordersCreated", initialTotal)
+        }
+
+        fun resetDaily() { dailyRevenue = 0.0 }
+    }
+}
+
+// Top-level singleton
+object ApiConfig {
+    const val URL_PATH = "https://api.day5.com"
+    const val TIMEOUT = 30
+}
+```
+
+**Rules of thumb:**
+- `object` (top-level) = singleton. Use for **stateless constants/utilities**.
+- `companion object` = class-level "static" members. Use for **factory methods**.
+- Make constructors `private` + force factory creation when you need to enforce invariants (unique IDs, counters).
+- If something takes a network/DB dependency, **don't** make it an `object`. Make it a class and inject it.
+
+---
+
+### Day 19: Extension Functions + Generics Basics
+
+```kotlin
+fun String.isValidEmail(): Boolean = contains("@") && contains(".")
+
+fun Double.formatCurrency(): String = "$${"%.2f".format(this)}"
+
+fun <T> List<T>.second(): T? = if (size >= 2) this[1] else null
+
+fun <T : Comparable<T>> List<T>.top3(): List<T> = sortedDescending().take(3)
+
+// Generic class
+class Box<T>(val value: T) {
+    fun <R> map(transform: (T) -> R): Box<R> = Box(transform(value))
+}
+
+// Variance (brief intro; revisit later)
+interface Producer<out T> { fun produce(): T }      // covariant
+interface Consumer<in T> { fun consume(t: T) }      // contravariant
+```
+
+**When to write an extension:**
+- Adding a helper to a class you don't own (e.g., `String`, `List`).
+- Replacing utility classes like `StringUtils`.
+- Don't overuse — if it belongs to your own class, make it a member.
+
+---
+
+### Day 20: Testing — Your First Tests (JUnit 5)
+
+Add to `build.gradle.kts` (Kotlin-only project, Weeks 5–8):
+```kotlin
+dependencies {
+    testImplementation(kotlin("test"))
+    testImplementation("org.junit.jupiter:junit-jupiter:5.11.0")
+}
+tasks.test { useJUnitPlatform() }
+```
+For the Android project (Week 9+), you'll add `androidx.test` + `compose-ui-test` as well. The `kotlin("test")` assertions work everywhere.
+
+`src/test/kotlin/OrderTest.kt`:
+```kotlin
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
+
+class OrderTest {
+    @Test
+    fun `create order with positive total works`() {
+        val order = Order.create(100.0)
+        assertEquals(100.0, order.total)
+        assertEquals(OrderStatus.PENDING, order.status)
+    }
+
+    @Test
+    fun `create order with zero total fails`() {
+        assertFailsWith<IllegalArgumentException> { Order.create(0.0) }
+    }
+
+    @Test
+    fun `applyDiscount above 100 fails`() {
+        val o = Order.create(100.0)
+        assertFailsWith<IllegalArgumentException> { o.applyDiscount(150.0) }
+    }
+}
+```
+
+**Rules:**
+- Test names describe behavior in English: backticks allow spaces.
+- One assertion concept per test.
+- Test the **boundary** (zero, negative, max) — that's where bugs live.
+
+---
+
+### Day 21: Practice — Typed Domain Model
+
+Build an `OrderService` with:
+1. `sealed class OrderResult` with `Success`, `InvalidTotal`, `AlreadyProcessed` variants.
+2. `Order` data class with private setters for `status` and `total`.
+3. `OrderService.process(order)` returns an `OrderResult`.
+4. At least 6 tests covering happy path + every error branch.
+
+---
+
+# Phase 4: Advanced Kotlin — Coroutines & Flow (Weeks 7–8) — *NEW*
+*Goal: Write async code without callback hell. Understand structured concurrency.*
+
+### Day 22: Why Coroutines?
+
+The problem: blocking a thread for an HTTP call wastes CPU. The old solution was callbacks (`onSuccess`, `onFailure`) which nest deeper every time. Kotlin coroutines let you write sequential-looking code that actually runs asynchronously.
+
+Add dependency (Kotlin-only project; you'll use `kotlinx-coroutines-android` in Phase 5):
+```kotlin
+implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.1")
+```
+
+```kotlin
+import kotlinx.coroutines.*
+
+suspend fun fetchUser(id: Int): String {
+    delay(500)                                  // non-blocking "pretend I/O"
+    return "User-$id"
+}
+
+fun main() = runBlocking {
+    val user = fetchUser(1)
+    println(user)
+}
+```
+
+`suspend` = a function that can pause and resume. Can only be called from another `suspend` function or a coroutine builder.
+
+---
+
+### Day 23: `launch` vs `async`, Dispatchers
+
+```kotlin
+fun main() = runBlocking {
+    val job = launch {                          // fire-and-forget
+        delay(1000)
+        println("Background work done")
+    }
+
+    val deferred = async {                      // returns a result
+        delay(500)
+        42
+    }
+
+    println("Answer = ${deferred.await()}")
+    job.join()
+}
+
+suspend fun parallel() = coroutineScope {
+    val a = async { fetchUser(1) }
+    val b = async { fetchUser(2) }
+    listOf(a.await(), b.await())                // both run concurrently
+}
+```
+
+**Dispatchers:**
+- `Dispatchers.Main` — Android UI thread
+- `Dispatchers.IO` — network, disk
+- `Dispatchers.Default` — CPU-bound work
+- `Dispatchers.Unconfined` — rarely use
+
+```kotlin
+withContext(Dispatchers.IO) { fetchFromDisk() }
+```
+
+---
+
+### Day 24: Structured Concurrency
+
+The rule: **coroutines outlive no scope**. When a scope is cancelled, all children are cancelled.
+
+```kotlin
+suspend fun loadDashboard() = coroutineScope {
+    val profile = async { fetchProfile() }
+    val orders = async { fetchOrders() }
+    val notifications = async { fetchNotifications() }
+    Dashboard(profile.await(), orders.await(), notifications.await())
+}
+// if ANY of the three throws, the others get cancelled — no leaks
+```
+
+Exception handling:
+```kotlin
+val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+
+scope.launch(CoroutineExceptionHandler { _, e ->
+    println("Caught: ${e.message}")
+}) {
+    throw RuntimeException("boom")
+}
+```
+
+---
+
+### Day 25: Flow — Cold Async Streams
+
+```kotlin
+import kotlinx.coroutines.flow.*
+
+fun orderIdsFlow(): Flow<String> = flow {
+    for (i in 1..5) {
+        delay(300)
+        emit("ORD-$i")
+    }
+}
+
+fun main() = runBlocking {
+    orderIdsFlow()
+        .filter { it.endsWith("3").not() }
+        .map { "Processing $it" }
+        .collect { println(it) }
+}
+```
+
+Flow is a **cold** stream: nothing happens until you `.collect { }`. Operators (`map`, `filter`, `debounce`, etc.) are chainable like collections but async-aware.
+
+---
+
+### Day 26: StateFlow and SharedFlow
+
+```kotlin
+class OrdersRepository {
+    private val _orders = MutableStateFlow<List<Order>>(emptyList())
+    val orders: StateFlow<List<Order>> = _orders.asStateFlow()
+
+    suspend fun addOrder(order: Order) {
+        _orders.value = _orders.value + order
+    }
+}
+```
+
+- **StateFlow** = always has a value, like an observable variable. Perfect for UI state.
+- **SharedFlow** = hot stream with configurable buffering. Perfect for one-shot events (navigate, show toast).
+
+---
+
+### Day 27: Practice — Async Order Processor
+
+Build:
+1. A `Flow<OrderEvent>` that emits events every 500ms.
+2. A processor coroutine that collects events, validates via your `OrderService`, and updates a `StateFlow<List<Order>>`.
+3. A second coroutine that "watches" the StateFlow and prints changes.
+4. Cancellation handling — stop gracefully when the user types `quit`.
+
+**Deliverable:** terminal app demonstrating concurrent producers/consumers with structured concurrency.
+
+---
+
+### Day 28: Checkpoint Week 8
+
+**Self-test:**
+- [ ] Explain `launch` vs `async`.
+- [ ] Why is Flow "cold"?
+- [ ] Difference between `StateFlow` and `SharedFlow`?
+- [ ] What happens if a child coroutine throws in `coroutineScope`?
+
+---
+
+# Phase 5: Android with Jetpack Compose (Weeks 9–10) — *REPLACED*
+*Goal: Build UI in Compose. State management before screens.*
+
+### Day 29: Android Project Anatomy + Gradle
+
+**⚠️ Switch IDE here:** Install **Android Studio** (latest Ladybug or newer) alongside your IDEA Ultimate. Open Android Studio, create a new project: **Empty Activity** (this is already Compose-based in modern templates).
+
+**Key files:**
+- `app/build.gradle.kts` — dependencies, SDK versions, plugins
+- `settings.gradle.kts` — module/plugin declarations
+- `AndroidManifest.xml` — permissions, activities, app metadata
+- `MainActivity.kt` — entry point
+- `gradle/libs.versions.toml` — version catalog (modern, preferred)
+
+**`libs.versions.toml` (version catalog — modern approach):**
+```toml
+[versions]
+kotlin = "2.3.20"
+agp = "8.10.0"
+composeBom = "2026.03.00"
+activityCompose = "1.13.0"
+lifecycle = "2.10.0"
+navigationCompose = "2.9.7"
+hilt = "2.59.2"
+room = "2.8.4"
+retrofit = "3.0.0"
+kotlinxSerialization = "1.8.0"
+kotlinxCoroutines = "1.10.1"
+ksp = "2.3.20-1.0.28"
+
+[libraries]
+compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
+compose-ui = { module = "androidx.compose.ui:ui" }
+compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
+compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+compose-material3 = { module = "androidx.compose.material3:material3" }
+activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
+lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
+lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle" }
+navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
+hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
+hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version = "1.2.0" }
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+retrofit-kotlinx-serialization = { module = "com.squareup.retrofit2:converter-kotlinx-serialization", version.ref = "retrofit" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
+```
+
+**`app/build.gradle.kts`:**
+```kotlin
+plugins {
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
+}
+
+android {
+    namespace = "com.kitchen.command"
+    compileSdk = 36
+
+    defaultConfig {
+        applicationId = "com.kitchen.command"
+        minSdk = 26
+        targetSdk = 36
+        versionCode = 1
+        versionName = "0.1.0"
+    }
+
+    buildFeatures { compose = true }
+    kotlinOptions { jvmTarget = "17" }
+}
+
+dependencies {
+    implementation(platform(libs.compose.bom))
+    implementation(libs.compose.ui)
+    implementation(libs.compose.ui.tooling.preview)
+    implementation(libs.compose.material3)
+    implementation(libs.activity.compose)
+    implementation(libs.lifecycle.viewmodel.compose)
+    implementation(libs.lifecycle.runtime.compose)
+    implementation(libs.navigation.compose)
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.kotlinx.serialization.json)
+
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+    implementation(libs.hilt.navigation.compose)
+
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
+
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.kotlinx.serialization)
+
+    debugImplementation(libs.compose.ui.tooling)
+}
+```
+
+**Why KSP, not KAPT:** KSP is 2× faster, Kotlin-native, and **required** for Room 3.0 (in alpha). Starting with KSP means no migration pain later.
+
+**Heads up on Room 3.0 (alpha, March 2026):** Google is modernizing Room. New namespace is `androidx.room3:room3-*`, Kotlin-only code gen, KSP-only, coroutines-first. **For this roadmap, stick with stable 2.8.4.** When 3.0 hits stable (~Q3 2026 estimate), migration is straightforward if your DAOs are already `suspend`-based.
+
+---
+
+### Day 30: First Compose UI
+
+```kotlin
+@Composable
+fun Greeting(name: String) {
+    Text(text = "Hello, $name!")
+}
+
+@Composable
+fun OrderCard(order: Order) {
+    Card(modifier = Modifier.padding(8.dp)) {
+        Column(Modifier.padding(16.dp)) {
+            Text(order.id, style = MaterialTheme.typography.titleLarge)
+            Text("Total: $${order.total}")
+            Text("Status: ${order.status}")
+        }
+    }
+}
+
+@Composable
+fun OrderList(orders: List<Order>) {
+    LazyColumn {
+        items(orders) { order -> OrderCard(order) }
+    }
+}
+
+@Preview
+@Composable
+fun Preview() {
+    OrderList(listOf(/* fake data */))
+}
+```
+
+**Core composables:** `Text`, `Button`, `Column`, `Row`, `Box`, `LazyColumn`, `LazyRow`, `Card`, `Image`, `Scaffold`, `TopAppBar`.
+
+---
+
+### Day 31: State in Compose — `remember`, `mutableStateOf`, Hoisting
+
+```kotlin
+@Composable
+fun Counter() {
+    var count by remember { mutableStateOf(0) }
+    Button(onClick = { count++ }) { Text("Count: $count") }
+}
+
+// State hoisting — parent owns state
+@Composable
+fun CounterStateless(count: Int, onIncrement: () -> Unit) {
+    Button(onClick = onIncrement) { Text("Count: $count") }
+}
+
+@Composable
+fun CounterScreen() {
+    var count by remember { mutableStateOf(0) }
+    CounterStateless(count, onIncrement = { count++ })
+}
+```
+
+**Rule:** hoist state to the lowest common ancestor that needs it. Stateless composables are easier to test and reuse.
+
+---
+
+### Day 32: Navigation Compose
+
+```kotlin
+@Composable
+fun AppNav() {
+    val nav = rememberNavController()
+    NavHost(nav, startDestination = "list") {
+        composable("list") {
+            OrderListScreen(onOrderClick = { id -> nav.navigate("detail/$id") })
+        }
+        composable("detail/{id}") { backStack ->
+            val id = backStack.arguments?.getString("id") ?: return@composable
+            OrderDetailScreen(id)
+        }
+    }
+}
+```
+
+---
+
+### Day 33: Layouts, Theming, Material 3
+
+- `Scaffold { TopAppBar, BottomBar, FAB, content }`
+- `Modifier` chain: `Modifier.padding(8.dp).fillMaxWidth().clickable { }`
+- `MaterialTheme.colorScheme`, `MaterialTheme.typography`
+
+---
+
+### Day 34: Practice — 3-Screen Compose App
+
+Screens: **Menu List → Menu Detail → Cart**. State hoisted to the nav graph's ViewModel (introduced next phase).
+
+---
+
+# Phase 6: Architecture & Data (Weeks 11–12) — *NEW*
+*Goal: Structure the app so it stays maintainable.*
+
+### Day 35: MVVM + ViewModel + StateFlow
+
+```kotlin
+class MenuViewModel : ViewModel() {
+    private val _uiState = MutableStateFlow(MenuUiState())
+    val uiState: StateFlow<MenuUiState> = _uiState.asStateFlow()
+
+    init {
+        loadMenu()
+    }
+
+    private fun loadMenu() = viewModelScope.launch {
+        _uiState.update { it.copy(loading = true) }
+        val items = repository.getMenu()         // suspend
+        _uiState.update { it.copy(loading = false, items = items) }
+    }
+}
+
+data class MenuUiState(
+    val loading: Boolean = false,
+    val items: List<MenuItem> = emptyList(),
+    val error: String? = null
+)
+
+@Composable
+fun MenuScreen(vm: MenuViewModel = viewModel()) {
+    val state by vm.uiState.collectAsStateWithLifecycle()
+    when {
+        state.loading -> CircularProgressIndicator()
+        state.error != null -> Text("Error: ${state.error}")
+        else -> MenuList(state.items)
+    }
+}
+```
+
+---
+
+### Day 36: Dependency Injection with Hilt
+
+Dependencies already declared in your `libs.versions.toml` (Hilt 2.59.2). Make sure `AndroidManifest.xml` has:
+```xml
+<application android:name=".KitchenApp" ... />
+```
+
+```kotlin
+@HiltAndroidApp
+class KitchenApp : Application()
+
+@Module
+@InstallIn(SingletonComponent::class)
+object NetworkModule {
+    @Provides @Singleton
+    fun provideJson(): Json = Json {
+        ignoreUnknownKeys = true
+        isLenient = true
+    }
+
+    @Provides @Singleton
+    fun provideRetrofit(json: Json): Retrofit = Retrofit.Builder()
+        .baseUrl("https://api.kitchen.com/")
+        .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
+        .build()
+
+    @Provides @Singleton
+    fun provideApi(retrofit: Retrofit): KitchenApi = retrofit.create()
+}
+
+@HiltViewModel
+class MenuViewModel @Inject constructor(
+    private val repository: MenuRepository
+) : ViewModel() { /* ... */ }
+```
+
+In your Compose screens:
+```kotlin
+@Composable
+fun MenuScreen(vm: MenuViewModel = hiltViewModel()) {
+    val state by vm.uiState.collectAsStateWithLifecycle()
+    /* ... */
+}
+```
+
+**Why Hilt:** the ViewModel no longer knows how to build its dependencies. Test by injecting fakes. No global singletons polluting your code.
+
+---
+
+### Day 37: Retrofit + Kotlinx Serialization
+
+```kotlin
+@Serializable
+data class MenuItemDto(val id: String, val name: String, val price: Double)
+
+interface KitchenApi {
+    @GET("menu") suspend fun getMenu(): List<MenuItemDto>
+    @POST("orders") suspend fun createOrder(@Body req: OrderRequest): OrderResponse
+}
+```
+
+---
+
+### Day 38: Room Database
+
+```kotlin
+@Entity(tableName = "menu_items")
+data class MenuItemEntity(
+    @PrimaryKey val id: String,
     val name: String,
-    val price: Double,
-    val available: Boolean = true
+    val price: Double
 )
 
-// Data classes
-data class Customer(
-    val id: String,
-    val name: String,
-    val email: String
-)
-
-data class OrderItem(
-    val menuItem: MenuItem,
-    val quantity: Int
-)
-
-// Order class with interface
-interface Billable {
-    fun calculateTotal(): Double
-    fun printBill()
+@Dao
+interface MenuDao {
+    @Query("SELECT * FROM menu_items") fun observeAll(): Flow<List<MenuItemEntity>>
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun upsertAll(items: List<MenuItemEntity>)
 }
 
-class Order(
-    val id: String,
-    val customer: Customer,
-    val items: MutableList<OrderItem> = mutableListOf()
-) : Billable {
-    override fun calculateTotal(): Double {
-        return items.sumOf { it.menuItem.price * it.quantity }
+@Database(entities = [MenuItemEntity::class], version = 1)
+abstract class AppDatabase : RoomDatabase() {
+    abstract fun menuDao(): MenuDao
+}
+```
+
+---
+
+### Day 39: Repository Pattern (tying it together)
+
+```kotlin
+class MenuRepository @Inject constructor(
+    private val api: KitchenApi,
+    private val dao: MenuDao
+) {
+    fun observeMenu(): Flow<List<MenuItem>> = dao.observeAll().map { list ->
+        list.map { it.toDomain() }
     }
-    
-    override fun printBill() {
-        println("\n========== ORDER BILL ==========")
-        println("Order ID: $id")
-        println("Customer: ${customer.name}")
-        println("Items:")
-        items.forEach { item ->
-            val lineTotal = item.menuItem.price * item.quantity
-            println("  - ${item.menuItem.name} x${item.quantity} = $${"%.2f".format(lineTotal)}")
-        }
-        println("Total: $${"%.2f".format(calculateTotal())}")
-        println("================================\n")
-    }
-    
-    fun addItem(menuItem: MenuItem, quantity: Int) {
-        if (menuItem.available) {
-            items.add(OrderItem(menuItem, quantity))
-            println("Added ${quantity}x ${menuItem.name}")
-        } else {
-            println("${menuItem.name} is not available")
-        }
+
+    suspend fun refresh() {
+        val remote = api.getMenu()
+        dao.upsertAll(remote.map { it.toEntity() })
     }
 }
-
-// Extensions
-fun Order.discount(percentage: Double): Double {
-    val discount = calculateTotal() * (percentage / 100)
-    return calculateTotal() - discount
-}
-
-// Main
-fun main() {
-    // Create menu
-    val menu = listOf(
-        MenuItem("M1", "Pizza Margherita", 12.99),
-        MenuItem("M2", "Caesar Salad", 6.99),
-        MenuItem("M3", "Garlic Bread", 3.99),
-        MenuItem("M4", "Coca Cola", 1.99)
-    )
-    
-    // Create customer
-    val customer = Customer("C1", "Alice", "alice@example.com")
-    
-    // Create order
-    val order = Order("ORD-001", customer)
-    
-    // Add items
-    order.addItem(menu[0], 2)  // 2x Pizza
-    order.addItem(menu[1], 1)  // 1x Salad
-    order.addItem(menu[3], 2)  // 2x Coca Cola
-    
-    // Print bill
-    order.printBill()
-    
-    // Apply discount
-    val discountedPrice = order.discount(10.0)  // 10% off
-    println("With 10% discount: $${"%.2f".format(discountedPrice)}")
-}
 ```
+
+Single-source-of-truth pattern: UI observes DB, repository refreshes DB from API.
 
 ---
 
-## Phase 3: Android Fundamentals (Weeks 5-6)
+### Day 40: Practice — Menu Screen, Real API, Cached
 
-*[Due to token limit, I'll provide a structured outline for the remaining sections. Complete implementation continues below]*
-
----
-
-# C Project Track
-
-## C Project Progression (Parallel to Kotlin)
-
-### Weeks 1-2: Data Structures
-**Monday (1.5 hrs) + Thursday (1.5 hrs) + Saturday (1 hr)**
-
-**Week 1 Project: Linked List Implementation**
-```c
-#include <stdio.h>
-#include <stdlib.h>
-
-typedef struct Node {
-    int data;
-    struct Node* next;
-} Node;
-
-Node* create_node(int data) {
-    Node* node = (Node*)malloc(sizeof(Node));
-    node->data = data;
-    node->next = NULL;
-    return node;
-}
-
-void insert_at_head(Node** head, int data) {
-    Node* new_node = create_node(data);
-    new_node->next = *head;
-    *head = new_node;
-}
-
-void print_list(Node* head) {
-    while (head != NULL) {
-        printf("%d -> ", head->data);
-        head = head->next;
-    }
-    printf("NULL\n");
-}
-
-void free_list(Node* head) {
-    while (head != NULL) {
-        Node* temp = head;
-        head = head->next;
-        free(temp);
-    }
-}
-
-int main() {
-    Node* head = NULL;
-    
-    insert_at_head(&head, 3);
-    insert_at_head(&head, 2);
-    insert_at_head(&head, 1);
-    
-    print_list(head);  // 1 -> 2 -> 3 -> NULL
-    
-    free_list(head);
-    return 0;
-}
-```
-
-**Deliverables:**
-- Insert at head (1 hr)
-- Insert at tail (30 min)
-- Delete node (30 min)
-- Print list (15 min)
+Build the real thing against a mock API (use `https://jsonplaceholder.typicode.com` or a local Ktor mock):
+1. Compose screen observes `MenuViewModel`.
+2. `MenuViewModel` observes `MenuRepository`.
+3. Repository pulls from Retrofit + caches to Room.
+4. Swipe-to-refresh triggers `repository.refresh()`.
+5. Works offline.
 
 ---
 
-### Weeks 3-4: Algorithms
-**Tuesday (1.5 hrs) + Thursday (1.5 hrs) + Saturday (1 hr)**
+# Phase 7: Real App Building (Weeks 13–16)
 
-**Week 3 Project: Sorting Algorithms**
-```c
-#include <stdio.h>
+### Week 13: Auth & Login
+- Login screen + form validation
+- DataStore for secure token storage
+- Retrofit `Authenticator` for auto-refresh
+- Logout flow
 
-void print_array(int arr[], int n) {
-    for (int i = 0; i < n; i++) {
-        printf("%d ", arr[i]);
-    }
-    printf("\n");
-}
+### Week 14: Kitchen Command MVP v0.1 (the real one)
+- Restaurant selection screen
+- Table/Order management screens
+- Create/edit order
+- Submit order to backend
+- **This is where it all comes together.** No new concepts — just integrate.
 
-// QuickSort
-int partition(int arr[], int low, int high) {
-    int pivot = arr[high];
-    int i = low - 1;
-    
-    for (int j = low; j < high; j++) {
-        if (arr[j] < pivot) {
-            i++;
-            int temp = arr[i];
-            arr[i] = arr[j];
-            arr[j] = temp;
-        }
-    }
-    
-    int temp = arr[i + 1];
-    arr[i + 1] = arr[high];
-    arr[high] = temp;
-    
-    return i + 1;
-}
+### Week 15: WebSockets & Realtime
+- Add OkHttp WebSocket or Ktor client
+- Observe order status changes
+- Push updates to UI via StateFlow
+- Reconnect logic with exponential backoff
 
-void quicksort(int arr[], int low, int high) {
-    if (low < high) {
-        int pi = partition(arr, low, high);
-        quicksort(arr, low, pi - 1);
-        quicksort(arr, pi + 1, high);
-    }
-}
-
-int main() {
-    int arr[] = {64, 34, 25, 12, 22, 11, 90};
-    int n = 7;
-    
-    printf("Original: ");
-    print_array(arr, n);
-    
-    quicksort(arr, 0, n - 1);
-    
-    printf("Sorted: ");
-    print_array(arr, n);
-    
-    return 0;
-}
-```
-
-**Deliverables:**
-- QuickSort implementation (1 hr)
-- MergeSort implementation (1 hr)
-- Time complexity analysis (30 min)
+### Week 16: Offline & Error Handling
+- Queue outbound actions when offline
+- Sync on reconnect
+- User-visible error states (snackbars, retry buttons)
+- Loading shimmer effects
 
 ---
 
-### Weeks 5-6: Binary Trees
-**Tuesday (2 hrs) + Thursday (1 hr) + Saturday (1 hr)**
+# Phase 8: Hardware & Production (Weeks 17–20) — *EXPANDED*
 
-```c
-#include <stdio.h>
-#include <stdlib.h>
+### Week 17: Bluetooth + Printer Integration
+- Android Bluetooth permissions (runtime for 12+)
+- Scan, pair, connect flow
+- ESC/POS protocol basics for thermal printers
+- Print a test receipt
+- Graceful disconnect + retry
 
-typedef struct TreeNode {
-    int data;
-    struct TreeNode* left;
-    struct TreeNode* right;
-} TreeNode;
+### Week 18: Testing Deep Dive
+- Unit tests: ViewModels, repositories, use cases
+- Fakes over mocks (prefer hand-written test doubles)
+- Compose UI tests: `composeTestRule`, `onNodeWithText`
+- Integration: Room in-memory DB
+- Aim: 70%+ coverage on domain + viewmodel layer (UI less important)
 
-TreeNode* create_node(int data) {
-    TreeNode* node = (TreeNode*)malloc(sizeof(TreeNode));
-    node->data = data;
-    node->left = NULL;
-    node->right = NULL;
-    return node;
-}
+### Week 19: Performance & Polish
+- Android Studio Profiler — CPU, memory, network
+- Recomposition debugging (`Modifier.composed`, layout inspector)
+- `LaunchedEffect` vs `remember` traps
+- `Stable`/`Immutable` annotations for Compose
+- R8/ProGuard rules if needed
 
-TreeNode* insert(TreeNode* root, int data) {
-    if (root == NULL) {
-        return create_node(data);
-    }
-    
-    if (data < root->data) {
-        root->left = insert(root->left, data);
-    } else {
-        root->right = insert(root->right, data);
-    }
-    
-    return root;
-}
-
-void inorder(TreeNode* root) {
-    if (root == NULL) return;
-    inorder(root->left);
-    printf("%d ", root->data);
-    inorder(root->right);
-}
-
-int main() {
-    TreeNode* root = NULL;
-    root = insert(root, 50);
-    root = insert(root, 30);
-    root = insert(root, 70);
-    
-    printf("Inorder: ");
-    inorder(root);  // 30 50 70
-    printf("\n");
-    
-    return 0;
-}
-```
+### Week 20: Production Release
+- Signed release build
+- `versionCode` / `versionName` strategy
+- Crashlytics (or Sentry) setup
+- Play Store listing: screenshots, privacy policy, content rating
+- Internal testing track → closed beta → production
 
 ---
 
-### Weeks 7-8: File I/O & Networking
-**Tuesday (2 hrs) + Thursday (1.5 hrs) + Saturday (1.5 hrs)**
+# Optional C Sidebar
 
-**File I/O Project:**
-```c
-#include <stdio.h>
-#include <string.h>
+*Dropped from the main track. Use ONLY if you have extra hours AND a specific reason (embedded work, interview-specific, curiosity).*
 
-typedef struct Order {
-    char id[10];
-    char item[50];
-    double price;
-} Order;
+If you still want to keep C alive, do **1 hour/week max**, on one of these:
+- Finish linked list + binary tree from v1
+- One Leetcode-style problem in C per week
+- Interrupt projects only if they're unblocking something else
 
-void write_orders(const char* filename) {
-    FILE* file = fopen(filename, "wb");
-    
-    Order orders[] = {
-        {"ORD-001", "Pizza", 12.99},
-        {"ORD-002", "Burger", 8.99},
-        {"ORD-003", "Salad", 6.99}
-    };
-    
-    fwrite(orders, sizeof(Order), 3, file);
-    fclose(file);
-    printf("Orders written to file\n");
-}
-
-void read_orders(const char* filename) {
-    FILE* file = fopen(filename, "rb");
-    Order order;
-    
-    printf("Orders from file:\n");
-    while (fread(&order, sizeof(Order), 1, file)) {
-        printf("%s: %s - $%.2f\n", order.id, order.item, order.price);
-    }
-    
-    fclose(file);
-}
-
-int main() {
-    write_orders("orders.dat");
-    read_orders("orders.dat");
-    return 0;
-}
-```
+**Do not let C eat into Kotlin hours.** Your goal is to ship an Android app.
 
 ---
 
-### Weeks 9-16: Real Application Projects
-
-**Week 9-10: Simple HTTP Server**
-```c
-// TCP socket server that handles basic HTTP requests
-// 2-3 hour project
-```
-
-**Week 11-12: Logger System**
-```c
-// File-based logging system with rotation
-// 2-3 hour project
-```
-
-**Week 13-14: JSON Parser**
-```c
-// Parse basic JSON for API communication
-// 3-4 hour project
-```
-
-**Week 15-16: Embedded Systems Simulator**
-```c
-// Simulate kitchen hardware communication
-// 3-4 hour project
-```
-
----
-
-# Django Sunday Walkthroughs
-
-## Approach: Code Review + Pattern Learning
-
-Every Sunday, 30 min - 1 hour: Read your own Kitchen Command code and identify patterns.
-
-### Week 1-2: Django Foundation Review
-
-**Sunday Walkthrough 1: Project Structure**
-
-Read and understand:
-```
-backend/
-├── kitchen_command/      # Project settings
-│   ├── settings.py       # Django config
-│   ├── urls.py           # Root URL routing
-│   ├── asgi.py          # Async configuration
-│   └── wsgi.py          # Production runner
-├── apps/
-│   ├── core/            # Shared utilities
-│   ├── orders/          # Order management
-│   ├── tables/          # Table management
-│   ├── payments/        # Payment processing
-│   └── integrations/    # Third-party integrations
-└── requirements.txt     # Dependencies
-```
-
-**Key Questions to Ask Yourself:**
-1. Why is each app separate?
-2. What does `settings.py` control?
-3. How do URL patterns work?
-
----
-
-**Sunday Walkthrough 2: Models & Database**
-
-Open `backend/apps/orders/models.py`
-
-**Pattern to Identify:**
-```python
-class Order(TimestampedModel, UUIDModel):
-    """
-    Why inherit from TimestampedModel and UUIDModel?
-    - Timestamp: auto-track created_at, updated_at
-    - UUID: use UUID instead of incremental ID
-    """
-    restaurant = models.ForeignKey(...)
-    customer = models.ForeignKey(...)
-```
-
-**Learn:**
-- Foreign key relationships
-- Model inheritance for reusable fields
-- Queryset methods (.filter, .get, .create)
-
----
-
-### Week 3-4: Views & Serializers
-
-**Sunday Walkthrough 3: ViewSets**
-
-Open `backend/apps/orders/views.py`
-
-**Pattern:**
-```python
-class OrderViewSet(viewsets.ModelViewSet):
-    """
-    A ViewSet automatically creates:
-    - GET /api/v1/orders/ (list)
-    - POST /api/v1/orders/ (create)
-    - GET /api/v1/orders/{id}/ (detail)
-    - PUT /api/v1/orders/{id}/ (update)
-    - DELETE /api/v1/orders/{id}/ (destroy)
-    """
-    queryset = Order.objects.all()
-    serializer_class = OrderSerializer
-```
-
-**Learn:** How Django REST Framework generates API endpoints automatically.
-
----
-
-**Sunday Walkthrough 4: Serializers**
-
-Open `backend/apps/orders/serializers.py`
-
-**Pattern:**
-```python
-class OrderSerializer(serializers.ModelSerializer):
-    """
-    Serializers convert Django models to/from JSON
-    They handle validation and transformation
-    """
-    class Meta:
-        model = Order
-        fields = ['id', 'restaurant', 'customer', 'items', 'total']
-```
-
-**Learn:** How data flows from database → API → frontend
-
----
-
-### Week 5-6: Signals & Hooks
-
-**Sunday Walkthrough 5: Django Signals**
-
-Open `backend/apps/orders/signals.py`
-
-**Pattern:**
-```python
-@receiver(post_save, sender=Order)
-def order_created(sender, instance, created, **kwargs):
-    """
-    This runs automatically when Order is created
-    - Send notifications
-    - Update inventory
-    - Trigger kitchen display
-    """
-```
-
-**Learn:** How to trigger side-effects when models change.
-
----
-
-### Week 7-8: Celery & Async Tasks
-
-**Sunday Walkthrough 6: Background Tasks**
-
-Open `backend/apps/integrations/tasks.py`
-
-**Pattern:**
-```python
-@shared_task
-def sync_order_to_accounting(order_id, integration_id):
-    """
-    This runs in background worker, not during HTTP request
-    - Fetches order from DB
-    - Calls accounting API
-    - Updates status
-    - Sends notification
-    """
-```
-
-**Learn:** Why long-running tasks shouldn't block API responses.
-
----
-
-### Week 9-10: WebSockets
-
-**Sunday Walkthrough 7: Real-time Updates**
-
-Open `backend/apps/core/websocket/`
-
-**Pattern:**
-```python
-class KitchenConsumer(AsyncWebsocketConsumer):
-    """
-    WebSocket connection for kitchen display
-    - Staff sees order updates instantly
-    - No polling needed
-    - True real-time
-    """
-```
-
-**Learn:** How real-time features work in Django.
-
----
-
-### Week 11-12: Authentication & Permissions
-
-**Sunday Walkthrough 8: Security**
-
-Open `backend/apps/core/permissions.py`
-
-**Pattern:**
-```python
-class IsRestaurantOwner(permissions.BasePermission):
-    """
-    Only restaurant owner can modify their data
-    Applied to all ViewSets automatically
-    """
-```
-
-**Learn:** How authorization works in REST APIs.
-
----
-
-### Week 13-14: Integrations
-
-**Sunday Walkthrough 9: External APIs**
-
-Open `backend/apps/integrations/`
-
-**Patterns:**
-- Stripe payment handling
-- Uber Eats order ingestion
-- QuickBooks accounting sync
-
-**Learn:** How to integrate external services safely.
-
----
-
-### Week 15-16: Optimization & Monitoring
-
-**Sunday Walkthrough 10: Production Concerns**
-
-Open `backend/apps/core/services/datadog_service.py`
-
-**Pattern:**
-```python
-"""
-Monitor:
-- API response times
-- Payment processing
-- Database query count
-- Error rates
-"""
-```
-
-**Learn:** How to instrument code for production debugging.
+# Active Django Sundays
+
+*Replacement for the passive "read your code" model.*
+
+Each Sunday, pick **one** of these active challenges (30–60 min):
+
+| Week | Active Challenge |
+|---|---|
+| 1 | Add a `DELETE /api/orders/{id}/` endpoint. Write a test. |
+| 2 | Add pagination to `OrderViewSet` using DRF's `PageNumberPagination`. |
+| 3 | Add a filter: `GET /api/orders/?status=pending`. |
+| 4 | Add a custom action `@action(detail=True) def refund(...)`. |
+| 5 | Add a signal that logs when an order is created. |
+| 6 | Write a Celery task that sends an email receipt 5 min after order creation. |
+| 7 | Add a WebSocket consumer that pushes order status updates. |
+| 8 | Profile one slow endpoint with `django-silk`; optimize one N+1. |
+| 9 | Add permissions: only the restaurant owner can edit their orders. |
+| 10 | Refactor one serializer to use `SerializerMethodField` for a computed field. |
+| 11 | Add rate limiting to the login endpoint. |
+| 12+ | You decide. Whatever's broken in your backend, fix one thing per Sunday. |
+
+**Rule:** every Sunday ends with a commit. No commit = you didn't learn it.
 
 ---
 
 # Assessment Checkpoints
 
-## Week 1-2 Checkpoint: Kotlin Fundamentals
-**Criteria:**
-- [ ] Write functions with default parameters
-- [ ] Use null safety operators (?., ?:)
-- [ ] Filter/map collections fluently
-- [ ] String templates work correctly
+## Week 2 — Fundamentals
+- [ ] Use `?.`, `?:`, smart casts fluently
+- [ ] Filter/map/reduce collections without looking things up
+- [ ] String templates feel natural
+- [ ] Write + call lambdas with `it` and named params
 
-**Challenge:**
-Write a program that:
-1. Accepts a list of menu prices
-2. Filters items under $10
-3. Applies 20% discount
-4. Prints formatted results
+**Mini-challenge:** Given `listOf(Order)`, return the top 3 orders by total, formatted as `"ID: $TOTAL"`.
 
----
+## Week 4 — Intermediate Kotlin
+- [ ] Can pick the right scope function (`let`/`apply`/`also`/`run`/`with`) without thinking
+- [ ] `when` expressions with smart cast
+- [ ] `runCatching` + `Result` instead of try/catch where appropriate
+- [ ] Visibility modifiers used intentionally
 
-## Week 3-4 Checkpoint: OOP Mastery
-**Criteria:**
-- [ ] Create classes with inheritance
-- [ ] Implement interfaces correctly
-- [ ] Use data classes for models
-- [ ] Write extension functions
+**Mini-challenge:** Refactor Day 7 project. Target: 30% fewer lines, zero `if/else` chains.
 
-**Challenge:**
-Build a small restaurant system with:
-- Food hierarchy (Pizza, Burger, Salad)
-- Order class that implements Billable
-- Extensions for formatting and discounts
+## Week 6 — OOP & Types
+- [ ] Sealed classes for state modeling
+- [ ] Data classes only where they make sense (no mutable data-class pitfalls)
+- [ ] Private constructors + factory for invariants
+- [ ] 6+ passing JUnit tests on domain logic
 
----
+**Mini-challenge:** Model `OrderResult` as a sealed hierarchy. Write tests for every variant.
 
-## Week 5-6 Checkpoint: Android Basics
-**Criteria:**
-- [ ] Understand Activity lifecycle
-- [ ] Create layouts with XML
-- [ ] Use ViewBinding correctly
-- [ ] Handle Intent navigation
+## Week 8 — Coroutines & Flow
+- [ ] Can explain structured concurrency
+- [ ] Write a `Flow` producer + collector
+- [ ] Use `StateFlow` for observable state
+- [ ] Handle cancellation correctly
 
-**Challenge:**
-Create a simple Android app:
-1. Main screen with menu list
-2. Click item → detail screen
-3. Add to cart button
-4. Pass data between activities
+**Mini-challenge:** Terminal app: concurrent producer + consumer + cancel on user input.
 
----
+## Week 10 — Compose UI
+- [ ] Stateless + stateful composables
+- [ ] State hoisting understood
+- [ ] LazyColumn with clickable items
+- [ ] Basic Material 3 theming
 
-## Week 7-8 Checkpoint: Advanced Android
-**Criteria:**
-- [ ] Implement MVVM pattern
-- [ ] Handle asynchronous operations (coroutines)
-- [ ] Work with databases (Room)
-- [ ] Manage app lifecycle correctly
+**Mini-challenge:** 3-screen Compose app with Nav, no ViewModel yet.
 
-**Challenge:**
-Extend previous app:
-1. Store orders locally with Room
-2. Fetch menu from backend API
-3. Use ViewModel to manage state
-4. Show loading states
+## Week 12 — Architecture & Data
+- [ ] ViewModel + StateFlow wired to Compose
+- [ ] Hilt-injected repository
+- [ ] Retrofit + Room in single-source-of-truth pattern
 
----
+**Mini-challenge:** Menu screen: real API → Room cache → Compose UI. Works offline.
 
-## Week 9-10 Checkpoint: Real App Building
-**Criteria:**
-- [ ] Connect to your Django backend
-- [ ] Implement proper error handling
-- [ ] Cache data appropriately
-- [ ] Handle offline scenarios
+## Week 14 — MVP v0.1
+- [ ] Full auth flow
+- [ ] Create/view/edit order
+- [ ] Connected to your Django backend
 
-**Challenge:**
-Build Kitchen Command MVP:
-1. Login screen
-2. Restaurant selection
-3. Table/order management
-4. Backend sync
+## Week 16 — MVP v0.2
+- [ ] WebSocket realtime updates
+- [ ] Offline queueing
+- [ ] All error states handled visually
 
----
+## Week 18 — Testing
+- [ ] 70%+ coverage on domain + VM
+- [ ] Compose UI tests for 2+ critical screens
+- [ ] Instrumentation test for Room DAO
 
-## Week 11-12 Checkpoint: Backend Integration
-**Criteria:**
-- [ ] Authenticate with tokens
-- [ ] Handle WebSocket connections
-- [ ] Implement state management
-- [ ] Manage user sessions
-
-**Challenge:**
-Full feature: Real-time order updates
-1. Backend sends WebSocket updates
-2. App receives and displays live
-3. User can interact and send updates back
-4. Proper error recovery
-
----
-
-## Week 13-14 Checkpoint: Hardware Ready
-**Criteria:**
-- [ ] Request Bluetooth permissions
-- [ ] Connect to devices
-- [ ] Handle disconnections gracefully
-- [ ] Parse printer responses
-
-**Challenge:**
-Bluetooth printer integration:
-1. Scan for devices
-2. Connect to printer
-3. Send test receipt
-4. Handle failures
-
----
-
-## Week 15-16 Final Checkpoint: Production Ready
-**Criteria:**
-- [ ] Unit tests written
-- [ ] Performance acceptable (< 2s loads)
-- [ ] No memory leaks
-- [ ] Handle all edge cases
-- [ ] App Store requirements met
-
-**Challenge:**
-Production readiness:
-1. 80% test coverage
-2. Performance benchmarks pass
-3. Security audit completed
-4. Release build signed
-5. Play Store submission ready
-
----
-
-## C Project Checkpoints (Every 2 Weeks)
-
-### Checkpoint 1: Linked Lists (Week 2)
-- [ ] Insert/delete operations
-- [ ] Memory properly freed
-- [ ] No segmentation faults
-
-### Checkpoint 2: Sorting (Week 4)
-- [ ] QuickSort works correctly
-- [ ] Time complexity understood
-- [ ] Edge cases handled
-
-### Checkpoint 3: Binary Trees (Week 6)
-- [ ] Tree operations correct
-- [ ] Traversal methods work
-- [ ] Memory managed properly
-
-### Checkpoint 4: File I/O (Week 8)
-- [ ] Read/write binary files
-- [ ] Error handling present
-- [ ] Data integrity verified
-
-### Checkpoint 5: Real Projects (Week 16)
-- [ ] 4 complete projects built
-- [ ] Code is production-quality
-- [ ] Interview-ready
-
----
-
-## Django Checkpoints (Weekly Reviews)
-
-Every Sunday, after code review, answer:
-1. What pattern did I see?
-2. Why is it implemented that way?
-3. How could I use this in my app?
-4. What would break if I changed it?
+## Week 20 — Production
+- [ ] Signed release APK/AAB
+- [ ] Crash reporting integrated
+- [ ] Play Store internal track submitted
+- [ ] No detectable memory leaks (LeakCanary clean on happy path)
 
 ---
 
 # Study Tips & Resources
 
 ## Learning Optimization
-1. **Code-first learning:** Write before reading explanations
-2. **Bridge languages:** Always compare to Python/JavaScript/TypeScript
-3. **Project-based:** Build real things, not toy exercises
-4. **Spaced repetition:** Review C weekly, Django on Sundays
-5. **Active recall:** Explain concepts out loud
+1. **Code-first:** write before reading explanations.
+2. **Daily deliverable:** every session ends with runnable code.
+3. **Weekly review (Saturday, 1 hr):** re-read Monday's notes, re-run Monday's code.
+4. **Spaced repetition:** at week N, re-open week N-2's project and extend it.
+5. **Explain out loud:** teach the day's concept to an imaginary junior. If you can't, you don't know it.
 
-## Resources
-- **Kotlin Official:** https://kotlinlang.org/docs/getting-started.html
-- **Android Docs:** https://developer.android.com/guide
-- **Kotlin Playground:** https://play.kotlinlang.org/ (try code online)
-- **Android Studio:** Download latest IDE
-- **Your Backend:** Reference your Django code constantly
+## Resources (bookmarked, in priority order)
 
-## Building Momentum
-- Week 1-2: Often feels hard (new syntax)
-- Week 3-4: Feels better (OOP clicks)
-- Week 5-6: Real Android feels magical
-- Week 7-8: Building real features (momentum!)
-- Week 9-16: Unstoppable (you know what you're doing)
+**Official docs (always up-to-date):**
+- **Kotlin Official Docs:** https://kotlinlang.org/docs/home.html
+- **What's new in Kotlin 2.3.20:** https://kotlinlang.org/docs/whatsnew2320.html
+- **Jetpack Compose Docs:** https://developer.android.com/jetpack/compose/documentation
+- **Compose BOM → library mapping:** https://developer.android.com/develop/ui/compose/bom/bom-mapping
+- **Kotlin Coroutines Guide:** https://kotlinlang.org/docs/coroutines-guide.html
+
+**Reference codebases (read these weekly):**
+- **Now in Android (canonical sample):** https://github.com/android/nowinandroid
+- **Android Samples:** https://github.com/android/compose-samples
+- **Android Architecture Guide:** https://developer.android.com/topic/architecture
+
+**Learning paths:**
+- **Android Basics with Compose (free course):** https://developer.android.com/courses/android-basics-compose/course
+- **Kotlin Playground:** https://play.kotlinlang.org/
+
+**Tools & backends for prototyping:**
+- **Ktor (Kotlin server):** https://ktor.io/
+- **JSONPlaceholder (fake REST API):** https://jsonplaceholder.typicode.com/
+- **Reqres (fake auth API):** https://reqres.in/
+
+## IDE Shortcuts (IDEA Ultimate & Android Studio share these)
+- `Shift+Shift` — Search Everywhere
+- `Ctrl+B` (Cmd+B) — Go to declaration
+- `Ctrl+Alt+L` — Reformat
+- `Alt+Enter` — Quick fix
+- `Ctrl+Shift+F10` — Run current file
+- `Shift+F6` — Rename
+
+## Building Momentum (honest expectations)
+- **Weeks 1–4:** Feels manageable. Kotlin reads like TypeScript with extras.
+- **Weeks 5–6:** OOP + types click. Your code looks like real Kotlin.
+- **Weeks 7–8:** Coroutines are confusing for 4 days, then it clicks. Push through.
+- **Weeks 9–10:** Compose is MAGIC. You'll be building UIs faster than you expected.
+- **Weeks 11–12:** Most frustrating phase — lots of moving parts (Hilt, Retrofit, Room). Expect 2 hours debugging config for every 1 hour of real code.
+- **Weeks 13–14:** Momentum peaks. You're shipping features.
+- **Weeks 15–16:** Edge cases and error handling. Less fun, more important.
+- **Weeks 17–20:** Hardware + polish. You'll feel like a real Android dev.
 
 ---
 
-**Total Time Investment: 4 months to proficiency**  
-**Time to Job-Ready: 3-4 months**  
-**Time to Building Kitchen Command Mobile: 5-6 months with backend integration**
+**Total Time Investment:** 5 months to production-ready
+**Time to Job-Ready Kotlin/Android:** 4 months (end of Week 16)
+**Time to Kitchen Command Mobile shipping:** 5 months (end of Week 20)
 
-This roadmap is your blueprint. Follow it ruthlessly. Don't skip sections. Every week builds on the previous one. By week 16, you'll be a proficient Android developer ready to ship production apps.
+This roadmap is your blueprint. It's designed to be **sustainable**, not heroic. Follow it at the pace it's designed for. 12–15 hours a week, every week, for 5 months will get you farther than 30-hour weeks for 6 weeks and burnout.
 
-Good luck. You've got this.
+Don't skip phases. Don't skip the checkpoints. Don't skip the tests.
+
+Good luck. Ship something real.

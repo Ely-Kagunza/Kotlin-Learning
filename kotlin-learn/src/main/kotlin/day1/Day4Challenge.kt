@@ -2,7 +2,7 @@ package org.example.day1
 
 // TODO 1: Create a base MenuItem class with name and price
 open class MenuItem(val name: String, val price: Double) {
-    open fun descriptor(): String {
+    open fun description(): String {
         return "$name - ${"%.2f".format(price)}"
     }
 }
@@ -10,14 +10,14 @@ open class MenuItem(val name: String, val price: Double) {
 // TODO 2: Create Burger and Pizza classes that inherit from MenuItem
 // TODO 3: Override description() to show item-specific info
 class Burger(name: String, price: Double, val hasTopping: Boolean = true) : MenuItem(name, price) {
-    override fun descriptor(): String {
-        return "${super.descriptor()} (Topping: $hasTopping)"
+    override fun description(): String {
+        return "${super.description()} (Topping: $hasTopping)"
     }
 }
 
 class Pizza(name: String, price: Double, val size: String = "Medium") : MenuItem(name, price) {
-    override fun descriptor(): String {
-        return "${super.descriptor()} (Size: $size)"
+    override fun description(): String {
+        return "${super.description()} (Size: $size)"
     }
 }
 
@@ -31,23 +31,29 @@ interface Billable {
 }
 
 // TODO 5: Create an Order class that:
-class Order(val orderId: String, val customer: Customer, val items: MutableList<MenuItem> = mutableListOf()): Billable {
+class Order(val orderId: String,
+            val customer: Customer
+): Billable {
+    private val _items: MutableList<MenuItem> = mutableListOf()
+    val items: List<MenuItem>
+        get() = _items.toList()
+
+    fun addItem(item: MenuItem) {
+        _items.add(item)
+    }
+
     override fun calculateTotal(): Double {
-        return items.sumOf { it.price }
+        return _items.sumOf { it.price }
     }
 
     override fun printBill() {
         println("---- Billing ----")
         println("Order # $orderId")
         println("Customer Name : ${customer.name}")
-        items.forEach { item ->
-            println("  -> ${item.descriptor()}")
+        _items.forEach { item ->
+            println("  -> ${item.description()}")
         }
         println("Total: KSh ${"%.2f".format(calculateTotal())}")
-    }
-
-    fun addItem(item: MenuItem) {
-        items.add(item)
     }
 }
 
