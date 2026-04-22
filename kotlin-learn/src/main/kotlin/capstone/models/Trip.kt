@@ -37,20 +37,20 @@ class Trip (
         get() = _status
 
     fun assignDriver(driver: Driver): Driver {
-        require(_status == TripStatus.REQUESTED) { "Cannot assign driver in state $_status" }
+        check(_status == TripStatus.REQUESTED) { "Cannot assign driver in state $_status" }
         this.driver = driver
         _status = TripStatus.MATCHED
         return driver
     }
 
     fun startTrip(): String {
-        require(_status == TripStatus.MATCHED) { "Cannot start trip in state $_status" }
+        check(_status == TripStatus.MATCHED) { "Cannot start trip in state $_status" }
         _status = TripStatus.IN_PROGRESS
         return "Trip from $startLocation to $endLocation has started"
     }
 
     fun completeTrip(): String {
-        require(_status == TripStatus.IN_PROGRESS) { "Cannot complete trip in state $_status" }
+        check(_status == TripStatus.IN_PROGRESS) { "Cannot complete trip in state $_status" }
         _status = TripStatus.COMPLETED
         return "Trip completed"
     }
@@ -61,9 +61,8 @@ class Trip (
     }
 
     fun updateDistance(km: Double): Double {
-        if (km > 0) {
-            _distance = km
-        }
+        require(km > 0) { "Distance must be positive, got $km" }
+        _distance = km
         return _distance
     }
 
