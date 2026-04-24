@@ -27,9 +27,9 @@ fun main() = runBlocking {
     // Run all 3 sequentially
     val startTime = System.currentTimeMillis()
 
-    val menuItems = fetchMenuItems()
-    val customerInfo = fetchCustomerInfo()
-    val orderProcessed = processOrder()
+    fetchMenuItems()
+    fetchCustomerInfo()
+    processOrder()
 
     val stopTime = System.currentTimeMillis()
     val seqDiff = stopTime - startTime
@@ -42,9 +42,9 @@ fun main() = runBlocking {
     val info = async { fetchCustomerInfo() }
     val processed = async { processOrder() }
 
-    val allMenuItems = items.await()
-    val allCustomerInfo = info.await()
-    val allProcessedOrders = processed.await()
+    items.await()
+    info.await()
+    processed.await()
 
     val stop = System.currentTimeMillis()
     val conDiff = stop - start

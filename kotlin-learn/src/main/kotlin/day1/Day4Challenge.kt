@@ -1,7 +1,13 @@
 package org.example.day1
 
 // TODO 1: Create a base MenuItem class with name and price
-open class MenuItem(val name: String, val price: Double) {
+abstract class MenuItem(val name: String, val price: Double) {
+    constructor(name: String) : this(name, 100.0)
+    init {
+        require(name.isNotBlank()) { "Name cannot be empty" }
+        require(price > 0.0) { "Price must be positive, got $price" }
+        println("We are ready to go")
+    }
     open fun description(): String {
         return "$name - ${"%.2f".format(price)}"
     }
@@ -10,12 +16,14 @@ open class MenuItem(val name: String, val price: Double) {
 // TODO 2: Create Burger and Pizza classes that inherit from MenuItem
 // TODO 3: Override description() to show item-specific info
 class Burger(name: String, price: Double, val hasTopping: Boolean = true) : MenuItem(name, price) {
+    constructor(name: String) : this(name, 300.0, false)
     override fun description(): String {
         return "${super.description()} (Topping: $hasTopping)"
     }
 }
 
 class Pizza(name: String, price: Double, val size: String = "Medium") : MenuItem(name, price) {
+    constructor(name: String) : this(name, 100.0, "Medium")
     override fun description(): String {
         return "${super.description()} (Size: $size)"
     }
@@ -66,7 +74,12 @@ fun Order.applyDiscount(percentage: Double): Double {
 fun main() {
     val pizza = Pizza("Pizza", 500.0, "Large")
     val burger = Burger("Burger", 450.0, true)
-    val salad = MenuItem("Salad", 2000.0)
+    val pizza2 = Pizza("Pepperoni")
+    val pizza1 = Pizza("Margherita", 500.0)     // primary
+    val burger1 = Burger("Beef", 450.0, true)   // primary
+    val burger2 = Burger("Chicken")
+
+    println("$pizza, $burger, $pizza2, $burger1, $burger2")
 
     val firstCustomer = Customer(101, "Elly", "ely@gmail.com")
 
@@ -74,7 +87,7 @@ fun main() {
 
     firstOrder.addItem(pizza)
     firstOrder.addItem(burger)
-    firstOrder.addItem(salad)
+    // firstOrder.addItem(salad)
 
     firstOrder.printBill()
 

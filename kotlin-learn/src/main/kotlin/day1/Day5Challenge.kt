@@ -21,19 +21,20 @@ class Orders private constructor(
     private var _total: Double = 0.0,
     var status: OrderStatus = OrderStatus.PENDING
 ) {
+    constructor(status: OrderStatus) : this("99", 500.0, status)
     val total: Double
         get() = _total
 
     fun addCharge(amount: Double): Double {
-        if (amount > 0) {
-            _total += amount
-        }
+        require(amount > 0) { "Amount must be positive" }
+        _total += amount
         return total
     }
 
-    fun applyDiscount(discount: Double) {
+    fun applyDiscount(discount: Double): String {
         require (discount in 0.0..100.0) { "Discount must be between 0 and 100" }
         _total *= (1 - discount / 100.0)
+        return "applied discount $_total"
     }
 
     // TODO 4: Companion object that, Tracks totalOrdersCreated, Tracks dailyRevenue, Has factory method createOrder()
@@ -72,13 +73,16 @@ fun main() {
     val orderOne = Orders.createOrder(150.0)
     val orderTwo = Orders.createOrder(300.0)
     val orderThree = Orders.createOrder(400.0)
+    val orderFour = Orders(OrderStatus.PENDING)
+
+    val orderFourDiscount = orderFour.applyDiscount(20.0)
+    println("Order Four: $orderFourDiscount")
 
     val newTotalOne = orderOne.addCharge(150.0)
     println("New total for OrderOne = KSh ${"%.2f".format(newTotalOne)}")
     println("Order Three details: ID-> ${orderThree.id}, Total->${orderThree.total}, Status: ${orderThree.status.description}\n")
 
-    val response = OrderService.processOrders(orderTwo)
-    when (response) {
+    when (val response = OrderService.processOrders(orderTwo)) {
         is ApiResponse.Success -> println("Order ${response.data} processed for KSh ${"%.2f".format(response.total)}\n")
         is ApiResponse.Error -> println("Error ${response.message}\n")
         is ApiResponse.Processing -> println("Processing...\n")

@@ -22,7 +22,7 @@ fun main() {
     // ===== PART 3: Null Safety =====
     val customerName: String = "Elly"
     val customerPhone: String? = null  // Can be null
-    val orderNumber: Int? = 12345
+    val orderNumber: Int? = null
 
     // Safe access with Elvis operator
     val displayPhone = customerPhone ?: "No phone provided"

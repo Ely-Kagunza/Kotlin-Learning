@@ -6,8 +6,9 @@ val saladPrice = 200.0
 
 // TODO 1: Write a function that calculates menu item cost
 fun calculateItemCost(itemName: String, quantity: Int = 1): Double {
+    require(itemName.isNotEmpty()) { "ItemName must not be empty" }
     return when (itemName.lowercase()) {
-        "pizza" -> pizzaPrice * quantity
+        "pizza" -> pizzaPrice.run { this * quantity }
         "burger" -> burgerPrice * quantity
         "salad" -> saladPrice * quantity
         else -> 0.0
@@ -22,8 +23,7 @@ fun applyDiscount(originalPrice: Double, discountPercentage: Double): Double {
 
 // TODO 3: Write a higher order function that processes multiple orders
 fun processOrders(items: List<String>, transformer: (Double) -> Double): Double {
-    return items.sumOf { item ->
-        transformer(calculateItemCost(item))
+    return items.sumOf { transformer(calculateItemCost(it))
     }
 //    var totalPrice = 0.0
 //
