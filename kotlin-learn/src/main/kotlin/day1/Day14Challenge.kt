@@ -72,7 +72,7 @@ class AudioBook(
 
 data class Member(
     val id: Int = 0,
-    var name: String ="member",
+    var name: String? ="member",
     var membershipStatus: MembershipStatus = MembershipStatus.ACTIVE,
     var borrowedItems: List<LibraryItem> = listOf()
 )
@@ -173,6 +173,7 @@ fun main() {
 
     println("\n")
     val memberOne = libraryAction(101, "Brooks", booksTwo)
+    println(memberOne.name?.let { it.length } ?: "Unknown")
     println(librarySummary(memberOne))
 
     println("--- Fine Range Classification ---")
