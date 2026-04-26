@@ -1,7 +1,7 @@
 package org.example.day1
 
-fun <T> secondItem(items: List<T>): T? {
-    return if (items.size > 1) items[1] else null
+fun <T> List<T>.secondItemOrNull(): T? {
+    return if (size > 1) this[1] else null
 }
 
 class Box<T>(val value: T) {
@@ -19,9 +19,9 @@ fun main() {
     val listOfInt = listOf(10, 20, 30)
     val listOfDouble = listOf(99.5)
 
-    println(secondItem(listOfString))
-    println(secondItem(listOfInt))
-    println(secondItem(listOfDouble))
+    println(listOfString.secondItemOrNull())
+    println(listOfInt.secondItemOrNull())
+    println(listOfDouble.secondItemOrNull())
 
     val nameBox = Box("Kotlin")
     println(nameBox.describe())

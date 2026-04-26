@@ -1,7 +1,7 @@
 package org.example.day1
 
-fun currencyFormat(amount: Double): String {
-    return "KSh ${"%.2f".format(amount)}"
+fun Double.currencyFormat(): String {
+    return "KSh ${"%.2f".format(this)}"
 }
 
 abstract class Delivery(
@@ -32,7 +32,7 @@ class BikeDelivery(trackingId: String, distance: Double) : Delivery(trackingId, 
     override fun ratePerKm(): Double = 20.0
 
     override fun description(): String {
-        return "Bike delivery $trackingId: ${distanceKm}km, total ${currencyFormat(calculateTotalCost())}"
+        return "Bike delivery $trackingId: ${distanceKm}km, total ${calculateTotalCost().currencyFormat()}"
     }
 }
 
@@ -41,7 +41,7 @@ class VanDelivery(trackingId: String, distance: Double) : Delivery(trackingId, d
     override fun ratePerKm(): Double = 80.0
 
     override fun description(): String {
-        return "Van delivery $trackingId: ${distanceKm}km, total ${currencyFormat(calculateTotalCost())}"
+        return "Van delivery $trackingId: ${distanceKm}km, total ${calculateTotalCost().currencyFormat()}"
     }
 }
 
@@ -50,7 +50,7 @@ class DroneDelivery(trackingId: String, distance: Double) : Delivery(trackingId,
     override fun ratePerKm(): Double = 120.0
 
     override fun description(): String {
-        return "Drone delivery $trackingId: ${distanceKm}km, total ${currencyFormat(calculateTotalCost())}"
+        return "Drone delivery $trackingId: ${distanceKm}km, total ${calculateTotalCost().currencyFormat()}"
     }
 }
 
