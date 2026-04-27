@@ -1,5 +1,6 @@
 package org.example.capstone.models
 
+import org.junit.jupiter.api.Assertions.assertAll
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -9,10 +10,13 @@ class TripTest {
     fun `new trip starts in requested state`() {
         val trip = Trip("TRIP-TEST", Passenger(1, "Alice", "0700"), "A", "B")
 
-        assertEquals(TripStatus.REQUESTED, trip.status)
-        assertEquals(null, trip.driver)
-        assertEquals(0.0, trip.distance)
-        assertEquals(0.0, trip.fare)
+        assertAll (
+            "Trip assurance",
+            { assertEquals(TripStatus.REQUESTED, trip.status) },
+            { assertEquals(null, trip.driver) },
+            { assertEquals(0.0, trip.distance) },
+            { assertEquals(0.0, trip.fare) }
+        )
     }
 
     @Test
